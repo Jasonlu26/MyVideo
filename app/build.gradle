@@ -1,0 +1,176 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    namespace 'com.yx.play'
+    compileSdk 33
+
+    defaultConfig {
+        applicationId "com.yx.play"
+        multiDexEnabled true
+        minSdk 26
+        targetSdk 33
+        versionCode 1
+        versionName "1.0.0"
+
+        ndkVersion "21.3.6528147"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testOptions {
+            unitTests.returnDefaultValues = true
+        }
+        ndk {
+            abiFilters 'armeabi-v7a', 'arm64-v8a'/*, 'x86', 'x86_64'*/
+        }
+    }
+
+    signingConfigs {
+        only {
+            storeFile file('MyKeyStore.jks')
+            storePassword 'yx123456'
+            keyAlias = 'key0'
+            keyPassword 'yx123456'
+        }
+    }
+
+    buildTypes {
+        release {
+            shrinkResources true
+            zipAlignEnabled true
+            debuggable false
+            minifyEnabled true
+
+//            signingConfig signingConfigs.only
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+
+            buildConfigField "String", "DB_NAME_PREFIX", RELEASE_DB_NAME_PREFIX
+
+            buildConfigField "int", "CACHE_DATA_VERSION", '1'
+            buildConfigField "String", "BUILD_TIMESTAMP", "\"\""
+
+//            println "Using production google-service.json"
+//            copy {
+//                from 'src/production/'
+//                include '*.json'
+//                into '.'
+//            }
+        }
+
+        dev {
+            jniDebuggable = false
+            minifyEnabled false
+            debuggable true
+            ext.enableCrashlytics = false
+            ext.alwaysUpdateBuildId = false
+//            signingConfig signingConfigs.only
+
+            buildConfigField "String", "DB_NAME_PREFIX", DEV_DB_NAME_PREFIX
+
+        }
+
+        debug {
+            jniDebuggable = false
+            minifyEnabled false
+            debuggable true
+//            signingConfig signingConfigs.only
+            buildConfigField "String", "DB_NAME_PREFIX", DEBUG_DB_NAME_PREFIX
+
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+
+    buildFeatures {
+        viewBinding = true
+        dataBinding = true
+    }
+
+
+    testOptions {
+        unitTests {
+            returnDefaultValues = true
+        }
+    }
+
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    lint {
+        checkReleaseBuilds = false
+        abortOnError = false
+        ignoreWarnings = true
+    }
+
+    configurations {
+        cleanedAnnotations
+        compile.exclude group: 'org.jetbrains', module: 'annotations'
+    }
+
+    configurations.configureEach {
+        resolutionStrategy {
+            // Use Gradle's ResolutionStrategy API
+            // to customize how this variant resolves dependencies.
+            force 'org.jetbrains.kotlin:kotlin-stdlib:1.7.21'
+        }
+
+    }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
+        exclude 'META-INF/gradle/incremental.annotation.processors'
+        pickFirst 'lib/x86/libc++_shared.so'
+        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+    }
+
+
+    kapt {
+        arguments {
+            arg("room.schemaLocation", "$projectDir/schemas".toString())
+//        arg("AROUTER_GENERATE_DOC", "enable")
+        }
+    }
+}
+
+dependencies {
+
+    implementation 'androidx.core:core-ktx:1.7.0'
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+    implementation 'com.google.android.material:material:1.9.0'
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.6.1'
+//    api 'androidx.lifecycle:lifecycle-common-java8:2.4.1'
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.4.1"
+
+    implementation "androidx.room:room-runtime:2.5.0"
+    kapt "androidx.room:room-compiler:2.5.0"
+    implementation "androidx.room:room-ktx:2.5.0"
+    testImplementation "androidx.room:room-testing:2.5.0"
+
+
+    //https://github.com/CymChad/BaseRecyclerViewAdapterHelper
+    implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6"
+
+    implementation "com.github.bumptech.glide:glide:4.14.2"
+    kapt "com.github.bumptech.glide:compiler:4.14.2"
+    implementation 'com.github.bumptech.glide:okhttp3-integration:4.14.2'
+}
