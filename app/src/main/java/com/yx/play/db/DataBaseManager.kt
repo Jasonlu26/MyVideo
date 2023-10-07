@@ -2,7 +2,7 @@ package com.yx.play.db
 
 import android.content.Context
 import androidx.room.Room
-import com.im.bbchat.BuildConfig
+import com.yx.play.BuildConfig
 
 
 /**

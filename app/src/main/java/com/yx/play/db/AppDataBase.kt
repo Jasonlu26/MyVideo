@@ -8,27 +8,27 @@ import androidx.room.RoomDatabase
  * @description
  * @version
  */
-@Database(
-    entities =
-    [
-//        BucketInfoEntity::class,
-//        UserEntity::class,
-//        CommonDataEntity::class,
-//        GroupMemberEntity::class,
-//        ConversationEntity::class,
-//        ConversationSnapShotEntity::class,
-//        FileDownloadEntity::class,
-//        FileTransferEntity::class,
-//        UserPrivacySettingEntity::class,
-//        GroupSequenceEntity::class,
-//        FriendApplyEntity::class,
-//        QrCodeEntity::class,
-//        UserPhoneContactEntity::class,
-//        UserThirdPartAccountEntity::class,
-    ],
-    version = 1,
-    exportSchema = true,
-)
+//@Database(
+//    entities =
+//    [
+////        BucketInfoEntity::class,
+////        UserEntity::class,
+////        CommonDataEntity::class,
+////        GroupMemberEntity::class,
+////        ConversationEntity::class,
+////        ConversationSnapShotEntity::class,
+////        FileDownloadEntity::class,
+////        FileTransferEntity::class,
+////        UserPrivacySettingEntity::class,
+////        GroupSequenceEntity::class,
+////        FriendApplyEntity::class,
+////        QrCodeEntity::class,
+////        UserPhoneContactEntity::class,
+////        UserThirdPartAccountEntity::class,
+//    ],
+//    version = 1,
+//    exportSchema = true,
+//)
 abstract class AppDataBase : RoomDatabase() {
 
 //    abstract fun commonDataDao(): CommonDataDao
