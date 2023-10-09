@@ -1,5 +1,6 @@
 package com.yx.play.api
 
+import androidx.annotation.Keep
 import com.blankj.utilcode.util.GsonUtils
 import com.yx.play.ext.responseToEntity
 import com.yx.play.net.*
@@ -86,6 +87,7 @@ data class DetailsResponse(
 //"vod_score_num": 998,
 //"created_time": 1683186560,
 //"created_time_text": "2023-05-04 15:49:20"
+@Keep
 data class DetailsItemResponse(
     var id: Int = 0,
     var vod_id: Int = 0,
@@ -119,6 +121,7 @@ data class DetailsItemResponse(
     var created_time_text: String = ""
 )
 
+@Keep
 data class DetailsItemPlayResponse(
     var name: String = "",
     var url: String = ""

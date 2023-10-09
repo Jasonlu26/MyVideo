@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:layout_marginStart="@dimen/dp_37"
+    android:layout_marginEnd="@dimen/dp_37"
+    android:paddingTop="@dimen/dp_8"
+    android:background="@drawable/shape_round_rect_bg_by_white">
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/titleView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_22"
+        android:paddingEnd="@dimen/dp_22"
+        android:textColor="@color/c_0D1324"
+        android:textSize="@dimen/sp_18"
+        android:paddingTop="@dimen/dp_10"
+        tools:text="title"
+        android:visibility="gone"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/contentView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/dp_15"
+        android:paddingBottom="@dimen/dp_22"
+        android:gravity="center"
+        android:paddingStart="@dimen/dp_22"
+        android:paddingEnd="@dimen/dp_22"
+        android:textColor="@color/c_0D1324"
+        android:textSize="@dimen/sp_15"
+        tools:text="subtitle"
+        app:layout_constraintBottom_toTopOf="@id/layoutCommonDialogAction"
+        app:layout_constraintTop_toBottomOf="@+id/titleView"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_0_5"
+        android:background="@color/c_8F9BAF"
+        app:layout_constraintBottom_toTopOf="@id/layoutCommonDialogAction"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layoutCommonDialogAction"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:divider="@color/c_8F9BAF"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:showDividers="middle">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/cancelBtn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_50"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="取消"
+            android:textColor="@color/c_theme"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@id/confirmBtn"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/confirmBtn"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_50"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="确定"
+            android:textColor="@color/c_theme"
+            android:textSize="@dimen/sp_18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@id/cancelBtn" />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

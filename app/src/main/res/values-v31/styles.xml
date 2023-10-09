@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <!-- Splash启动页Style -->
+    <!--    <style name="SplashActivityTheme" parent="AppTheme">-->
+    <!--        &lt;!&ndash;启动画面背景颜色&ndash;&gt;-->
+    <!--        <item name="windowSplashScreenBackground">@color/white</item>-->
+    <!--        &lt;!&ndash; 启动画面icon图标：这里可以是图片、帧动画等&ndash;&gt;-->
+    <!--        <item name="windowSplashScreenAnimatedIcon">@mipmap/ic_app_33_logo</item>-->
+    <!--        <item name="windowSplashScreenIconBackgroundColor">@color/white</item>-->
+    <!--        &lt;!&ndash; icon动画在关闭之前显示的时长：最长时间为1000毫秒&ndash;&gt;-->
+    <!--        <item name="windowSplashScreenAnimationDuration">1000</item>-->
+    <!--        &lt;!&ndash; 启动画面底部的 Brand 图片&ndash;&gt;-->
+    <!--&lt;!&ndash;        <item name="android:windowSplashScreenBrandingImage">@drawable/brand_img</item>&ndash;&gt;-->
+    <!--        &lt;!&ndash; Splash退出后的主题&ndash;&gt;-->
+    <!--&lt;!&ndash;        <item name="postSplashScreenTheme">@style/Theme.Android12_Splash</item>&ndash;&gt;-->
+    <!--    </style>-->
+
+<!--    <style name="SplashActivityTheme"-->
+<!--        parent="Theme.AppCompat.Light.NoActionBar">-->
+<!--        <item name="android:windowNoTitle">true</item>-->
+<!--        <item name="android:windowActionBar">false</item>-->
+<!--        <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>-->
+<!--        <item name="android:windowSplashScreenAnimationDuration">1000</item>-->
+<!--        <item name="android:windowSplashScreenBackground">@color/white</item>-->
+<!--        <item name="android:background">@color/white</item>-->
+<!--    </style>-->
+</resources>

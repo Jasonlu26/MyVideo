@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/dp_80"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingHorizontal="@dimen/dp_16"
+    >
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivHistoryVideoThumb"
+        android:layout_width="@dimen/dp_80"
+        android:layout_height="@dimen/dp_80"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:shapeAppearanceOverlay="@style/RoundedStyle"
+        tools:src="@color/c_FF4500"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHistoryVideoName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toEndOf="@id/ivHistoryVideoThumb"
+        app:layout_constraintTop_toTopOf="@id/ivHistoryVideoThumb"
+        android:layout_marginTop="@dimen/dp_4"
+        android:layout_marginStart="@dimen/dp_12"
+        android:includeFontPadding="false"
+        android:textSize="@dimen/sp_18"
+        android:textColor="@color/c_0D1324"
+        tools:text="2012"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tvHistoryVideoTime"
+        android:layout_width="@dimen/dp_0"
+        android:layout_height="wrap_content"
+        app:layout_constraintStart_toStartOf="@id/tvHistoryVideoName"
+        app:layout_constraintBottom_toBottomOf="@id/ivHistoryVideoThumb"
+        android:layout_marginBottom="@dimen/dp_8"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="@dimen/dp_2"
+        android:textSize="@dimen/sp_14"
+        android:textColor="@color/c_8F9BAF"
+        android:includeFontPadding="false"
+        android:maxLines="1"
+        android:ellipsize="end"
+        tools:text="剩余 00：18：12"/>
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,6 +1,8 @@
 package com.yx.play.api
 
+import androidx.annotation.Keep
 import com.blankj.utilcode.util.GsonUtils
+import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.yx.play.ext.responseToEntity
 import com.yx.play.net.*
 import okhttp3.Request
@@ -42,6 +44,7 @@ data class RecommendResponse(
 //    "created_time": 1689557847,
 //    "created_time_text": "2023-07-17 09:37:27"
 //},
+@Keep
 data class RecommendItemResponse(
     var id: Int = 0,
     var video_id: String = "",
@@ -64,8 +67,10 @@ data class RecommendItemResponse(
     var vod_score_num: Int = 0,
     var created_tim: Long = 0L,
     var created_time_text: String = ""
-)
-
+) : MultiItemEntity {
+    override val itemType: Int
+        get() = 1
+}
 
 object Recommend {
     fun execute(): ResponseResult<MutableList<RecommendItemResponse>?> {

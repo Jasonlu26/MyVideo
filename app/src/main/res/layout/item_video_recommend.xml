@@ -13,13 +13,14 @@
         app:shapeSolidColor="@color/white"
         app:shapeCornersRadius="@dimen/dp_8">
 
-        <androidx.appcompat.widget.AppCompatImageView
+        <com.google.android.material.imageview.ShapeableImageView
             android:id="@+id/ivVideoThumb"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:shapeAppearance="@style/RoundedStyle"
             />
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -28,10 +29,10 @@
             android:layout_height="wrap_content"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginStart="@dimen/dp_18"
-            android:layout_marginTop="@dimen/dp_12"
-            android:textColor="@color/theme_color_yellow"
-            android:textSize="@dimen/sp_40"
+            android:layout_marginStart="@dimen/dp_6"
+            android:layout_marginTop="@dimen/dp_4"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_28"
             tools:text="9.8"/>
 
         <androidx.appcompat.widget.AppCompatTextView
@@ -54,10 +55,10 @@
         android:id="@+id/tvVideoName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/dp_8"
-        android:textColor="@color/text_0D1324"
+        android:layout_marginTop="@dimen/dp_4"
+        android:textColor="@color/c_0D1324"
         android:gravity="center"
         android:maxLines="1"
-        android:textSize="@dimen/sp_16"
+        android:textSize="@dimen/sp_14"
         tools:text="2012"/>
 </androidx.appcompat.widget.LinearLayoutCompat>

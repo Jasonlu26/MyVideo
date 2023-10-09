@@ -16,13 +16,20 @@ android {
         versionCode 1
         versionName "1.0.0"
 
-        ndkVersion "21.3.6528147"
+//        ndkVersion "21.3.6528147"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         testOptions {
             unitTests.returnDefaultValues = true
         }
         ndk {
-            abiFilters 'armeabi-v7a', 'arm64-v8a'/*, 'x86', 'x86_64'*/
+            abiFilters 'armeabi-v7a', 'x86', 'arm64-v8a', 'x86_64', 'armeabi'
+        }
+        packagingOptions {
+            doNotStrip "*/armeabi-v7a/*.so"
+            doNotStrip "*/x86/*.so"
+            doNotStrip "*/arm64-v8a/*.so"
+            doNotStrip "*/x86_64/*.so"
+            doNotStrip "armeabi.so"
         }
     }
 
@@ -42,7 +49,7 @@ android {
             debuggable false
             minifyEnabled true
 
-//            signingConfig signingConfigs.only
+            signingConfig signingConfigs.only
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
 
             buildConfigField "String", "DB_NAME_PREFIX", RELEASE_DB_NAME_PREFIX
@@ -64,7 +71,7 @@ android {
             debuggable true
             ext.enableCrashlytics = false
             ext.alwaysUpdateBuildId = false
-//            signingConfig signingConfigs.only
+            signingConfig signingConfigs.only
 
             buildConfigField "String", "DB_NAME_PREFIX", DEV_DB_NAME_PREFIX
 
@@ -74,7 +81,7 @@ android {
             jniDebuggable = false
             minifyEnabled false
             debuggable true
-//            signingConfig signingConfigs.only
+            signingConfig signingConfigs.only
             buildConfigField "String", "DB_NAME_PREFIX", DEBUG_DB_NAME_PREFIX
 
         }
@@ -124,18 +131,30 @@ android {
 
     }
 
-    packagingOptions {
-        exclude 'META-INF/DEPENDENCIES'
-        exclude 'META-INF/NOTICE'
-        exclude 'META-INF/LICENSE'
-        exclude 'META-INF/LICENSE.txt'
-        exclude 'META-INF/NOTICE.txt'
-        exclude 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
-        exclude 'META-INF/gradle/incremental.annotation.processors'
-        pickFirst 'lib/x86/libc++_shared.so'
-        pickFirst 'lib/arm64-v8a/libc++_shared.so'
-        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+//    packagingOptions {
+//        exclude 'META-INF/DEPENDENCIES'
+//        exclude 'META-INF/NOTICE'
+//        exclude 'META-INF/LICENSE'
+//        exclude 'META-INF/LICENSE.txt'
+//        exclude 'META-INF/NOTICE.txt'
+//        exclude 'okhttp3/internal/publicsuffix/publicsuffixes.gz'
+//        exclude 'META-INF/gradle/incremental.annotation.processors'
+//        pickFirst 'lib/x86/libc++_shared.so'
+//        pickFirst 'lib/arm64-v8a/libc++_shared.so'
+//        pickFirst 'lib/armeabi-v7a/libc++_shared.so'
+//    }
 
 
     kapt {
@@ -147,6 +166,8 @@ android {
 }
 
 dependencies {
+
+    implementation fileTree(include: ['*.jar', '*.aar'], dir: 'libs')
 
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.6.1'
@@ -166,7 +187,6 @@ dependencies {
     implementation "androidx.room:room-ktx:2.5.0"
     testImplementation "androidx.room:room-testing:2.5.0"
 
-
     //https://github.com/CymChad/BaseRecyclerViewAdapterHelper
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:3.0.6"
 
@@ -183,6 +203,12 @@ dependencies {
 
     implementation "com.blankj:utilcodex:1.30.0"
     implementation "com.google.code.gson:gson:2.8.5"
+    implementation 'com.alibaba:fastjson:1.2.72'
 
     implementation "com.github.lygttpod:SuperTextView:2.4.5"
+
+    implementation 'androidx.multidex:multidex:2.0.1'
+
+    implementation "com.github.razerdp:BasePopup:2.2.7"
+
 }

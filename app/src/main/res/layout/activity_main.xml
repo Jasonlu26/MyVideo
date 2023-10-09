@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context=".activity.MainActivity"
-    android:fitsSystemWindows="true"
     >
 
     <androidx.appcompat.widget.AppCompatImageView
@@ -22,33 +22,91 @@
         android:id="@+id/layoutTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_56"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginTop="@dimen/dp_44"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="@dimen/dp_30"
+        android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:gravity="center_vertical">
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
 
         <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvSearch"
             android:layout_width="@dimen/dp_0"
             android:layout_height="@dimen/dp_44"
-            android:background="@drawable/bg_search"
+            android:layout_marginStart="@dimen/dp_10"
             android:layout_weight="1"
-            android:layout_marginStart="@dimen/dp_22"/>
+            android:paddingHorizontal="@dimen/dp_18"
+            android:textColor="@color/c_8F9BAF"
+            android:textSize="@dimen/sp_18"
+            android:text="搜索"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_search"
+            />
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivHistory"
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
-            android:src="@drawable/yx_setting_img"
             android:layout_marginStart="@dimen/dp_12"
-            android:layout_marginEnd="@dimen/dp_12"/>
+            android:layout_marginEnd="@dimen/dp_12"
+            android:padding="@dimen/dp_8"
+            android:src="@drawable/yx_setting_img"
+            />
     </androidx.appcompat.widget.LinearLayoutCompat>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/listView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:paddingStart="@dimen/dp_10"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutTop"
-        app:layout_constraintBottom_toBottomOf="parent"/>
+        />
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/layoutHistory"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/dp_36"
+        android:layout_marginBottom="@dimen/dp_100"
+        android:background="@drawable/bg_main_history"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingHorizontal="@dimen/dp_10"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible"
+        >
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHistoryTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/c_8F9BAF"
+            android:textSize="@dimen/sp_12"
+            tools:text="22：13 |"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvHistoryName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_4"
+            android:textColor="@color/c_0D1324"
+            android:textSize="@dimen/sp_12"
+            tools:text="怒海狂鲨"
+            />
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp_4"
+            android:text="继续播放"
+            android:textColor="@color/c_theme"
+            android:textSize="@dimen/sp_12"
+            />
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

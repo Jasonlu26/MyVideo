@@ -13,9 +13,7 @@ import com.yx.play.BuildConfig
 class DataBaseManager private constructor() {
 
     private var appDataBase: AppDataBase? = null
-
-
-
+    private var isOpenReward = false
 
     companion object {
 
@@ -38,8 +36,8 @@ class DataBaseManager private constructor() {
         }
     }
 
-    fun init(context: Context, uid: String): AppDataBase {
-        val dbName = BuildConfig.DB_NAME_PREFIX + uid
+    fun init(context: Context): AppDataBase {
+        val dbName = BuildConfig.DB_NAME_PREFIX + "yx"
 
         return if (appDataBase == null || appDataBase?.openHelper?.databaseName != dbName) {
             val db = Room
@@ -145,6 +143,12 @@ class DataBaseManager private constructor() {
 //        }
 //        return commonDataBase as ShareAppDataBase
 //    }
+
+    fun getIsOpenReward() = isOpenReward
+
+    fun setIsOpenReward() {
+        this.isOpenReward = true
+    }
 
     fun close() {
         appDataBase = null
