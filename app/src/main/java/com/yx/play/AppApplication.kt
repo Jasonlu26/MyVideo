@@ -1,17 +1,11 @@
 package com.yx.play
 
-import android.app.Activity
-import android.app.Application
 import android.content.ServiceConnection
-import android.os.Bundle
-import android.util.Log
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.multidex.MultiDexApplication
 import com.blankj.utilcode.util.ProcessUtils
 import com.blankj.utilcode.util.Utils
-import com.rh.sdk.api.RHSDKManager
 import com.yx.play.db.DataBaseManager
-import com.yx.play.util.TestPosId
 
 /**
  * @description
@@ -52,10 +46,10 @@ open class AppApplication:  MultiDexApplication() {
     }
 
     private fun initSdk() {
-        val rhsdkManager = RHSDKManager.initialize()
-        rhsdkManager.isPersonalRecommend = true
-        rhsdkManager.isDebug = true
-        rhsdkManager.startWithOptions(this, TestPosId.APP_ID.value, TestPosId.APP_KEY.value)
+//        val rhsdkManager = RHSDKManager.initialize()
+//        rhsdkManager.isPersonalRecommend = true
+//        rhsdkManager.isDebug = true
+//        rhsdkManager.startWithOptions(this, TestPosId.APP_ID.value, TestPosId.APP_KEY.value)
     }
 
     private fun initIm() {

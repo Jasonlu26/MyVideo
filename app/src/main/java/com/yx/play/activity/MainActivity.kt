@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater).bindView(this)
-        checkAndRequestPermission()
+//        checkAndRequestPermission()
         initView()
         fetchData()
     }
@@ -184,21 +184,21 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        lifecycleScope.launch(Dispatchers.IO) {
-            val history =
-                DataBaseManager.getInstance().getDataBase()?.historyDataDao()?.getNewHistory()
-            withContext(Dispatchers.Main) {
-                if (history == null) {
-                    mBinding.layoutHistory.gone()
-                } else {
-                    historyId = history.tvId
-                    val time = DateUtil.getVideoTimeString(history.playDuration)
-                    mBinding.tvHistoryTime.text = "$time |"
-                    mBinding.tvHistoryName.text = history.name
-                    mBinding.layoutHistory.visible()
-                }
-            }
-        }
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val history =
+//                DataBaseManager.getInstance().getDataBase()?.historyDataDao()?.getNewHistory()
+//            withContext(Dispatchers.Main) {
+//                if (history == null) {
+//                    mBinding.layoutHistory.gone()
+//                } else {
+//                    historyId = history.tvId
+//                    val time = DateUtil.getVideoTimeString(history.playDuration)
+//                    mBinding.tvHistoryTime.text = "$time |"
+//                    mBinding.tvHistoryName.text = history.name
+//                    mBinding.layoutHistory.visible()
+//                }
+//            }
+//        }
     }
 
     /**

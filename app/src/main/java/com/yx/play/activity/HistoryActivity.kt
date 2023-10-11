@@ -112,14 +112,7 @@ class HistoryActivity : AppCompatActivity() {
                 .override(80f.dpToPx(), 80f.dpToPx())
                 .into(holder.viewBinding.ivHistoryVideoThumb)
 
-            holder.viewBinding.tvHistoryVideoName.text = data.name + "-" + data.playName
-            holder.viewBinding.tvHistoryVideoTime.text = if (data.playDuration < data.duration) {
-                "剩余：${DateUtil.getVideoTimeString(data.duration - data.playDuration)}"
-            } else if (data.playDuration == data.duration) {
-                "观看结束"
-            } else {
-                " "
-            }
+            holder.viewBinding.tvHistoryVideoName.text = data.name
         }
 
         override fun onCreateViewBinding(
