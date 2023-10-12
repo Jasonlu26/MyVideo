@@ -27,6 +27,7 @@ import com.yx.play.databinding.ItemVideoRecommendBinding
 import com.yx.play.ext.*
 import com.yx.play.net.ResponseResult
 import com.yx.play.util.IntentUtils
+import com.yx.play.util.VideoUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -133,26 +134,7 @@ class SearchActivity : AppCompatActivity() {
                 .error(R.drawable.uk_image_fail1)
                 .override(80f.dpToPx(), 80f.dpToPx())
                 .into(holder.viewBinding.ivSearchThumb)
-            val str = when (data.type_id_1) {
-                1 -> {
-                    "电影"
-                }
-                2 -> {
-                    "电视剧"
-                }
-                3 -> {
-                    "综艺"
-                }
-                4 -> {
-                    "动漫"
-                }
-                24 -> {
-                    "纪录片"
-                }
-                else -> {
-                    "其他"
-                }
-            }
+            val str = VideoUtils.getVideoType(data.type_id_1)
             holder.viewBinding.tvVideoContent.text = data.vod_year + "/" + str + "/" + data.vod_area + "/" + data.vod_blurb
             holder.viewBinding.tvVideoName.text = data.vod_name
         }

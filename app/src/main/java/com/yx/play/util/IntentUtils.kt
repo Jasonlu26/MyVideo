@@ -22,7 +22,7 @@ object IntentUtils {
     private var loadingDialog: PageLoadingDialog? = null
 
     fun intentDetails(
-        context: AppCompatActivity,
+        context: Activity,
         id: String,
     ) {
         val isOpenReward = DataBaseManager.getInstance().getIsOpenReward()
