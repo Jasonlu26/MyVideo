@@ -5,7 +5,7 @@ import android.graphics.Color
 import android.view.Gravity
 import android.view.View
 import androidx.fragment.app.Fragment
-import com.yx.play.R
+import com.fqh.timeplan.timeplan.R
 import razerdp.basepopup.BasePopupWindow
 
 class PageLoadingDialog : BasePopupWindow {

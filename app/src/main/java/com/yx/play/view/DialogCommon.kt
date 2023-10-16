@@ -4,7 +4,7 @@ import android.content.Context
 import android.view.View
 import android.widget.TextView
 import androidx.core.content.ContextCompat
-import com.yx.play.R
+import com.fqh.timeplan.timeplan.R
 import com.yx.play.ext.click
 import com.yx.play.ext.gone
 import com.yx.play.ext.visible

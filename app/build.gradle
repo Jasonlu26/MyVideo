@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.yx.play'
+    namespace 'com.fqh.timeplan.timeplan'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.yx.play"
+        applicationId "com.fqh.timeplan.timeplan"
         multiDexEnabled true
         minSdk 26
         targetSdk 33
@@ -210,5 +210,8 @@ dependencies {
     implementation 'androidx.multidex:multidex:2.0.1'
 
     implementation "com.github.razerdp:BasePopup:2.2.7"
+
+    implementation 'com.pangle.cn:ads-sdk-pro:5.6.0.3'
+    implementation "com.android.support:support-v4:24.2.0"
 
 }

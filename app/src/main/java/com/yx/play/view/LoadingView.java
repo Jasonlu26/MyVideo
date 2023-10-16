@@ -13,7 +13,7 @@ import android.view.animation.LinearInterpolator;
 import androidx.annotation.NonNull;
 
 import com.blankj.utilcode.util.SizeUtils;
-import com.yx.play.R;
+import com.fqh.timeplan.timeplan.R;
 
 public class LoadingView extends View {
 

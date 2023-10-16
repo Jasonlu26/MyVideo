@@ -51,5 +51,10 @@
       <option name="name" value="MavenLocal" />
       <option name="url" value="file:/$USER_HOME$/.m2/repository/" />
     </remote-repository>
+    <remote-repository>
+      <option name="id" value="maven4" />
+      <option name="name" value="maven4" />
+      <option name="url" value="https://artifact.bytedance.com/repository/pangle" />
+    </remote-repository>
   </component>
 </project>

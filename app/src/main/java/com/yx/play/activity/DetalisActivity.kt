@@ -7,12 +7,13 @@ import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.bumptech.glide.Glide
-import com.yx.play.R
+import com.fqh.timeplan.timeplan.R
+import com.fqh.timeplan.timeplan.databinding.ActivityDetalisBinding
 import com.yx.play.api.Details
-import com.yx.play.databinding.ActivityDetalisBinding
 import com.yx.play.db.DataBaseManager
 import com.yx.play.db.model.YXHistoryRecordModel
-import com.yx.play.ext.*
+import com.yx.play.ext.bindView
+import com.yx.play.ext.click
 import com.yx.play.net.ResponseResult
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers

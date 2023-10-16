@@ -6,6 +6,7 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.KeyEvent
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
@@ -13,17 +14,17 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import com.bumptech.glide.Glide
+import com.bytedance.sdk.openadsdk.*
+import com.bytedance.sdk.openadsdk.TTFullScreenVideoAd.FullScreenVideoAdInteractionListener
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.yx.play.R
+import com.fqh.timeplan.timeplan.R
+import com.fqh.timeplan.timeplan.databinding.ActivityMainBinding
 import com.yx.play.api.Recommend
 import com.yx.play.api.RecommendItemResponse
-import com.yx.play.databinding.ActivityMainBinding
-import com.yx.play.db.DataBaseManager
 import com.yx.play.ext.*
 import com.yx.play.net.ResponseResult
-import com.yx.play.util.DateUtil
 import com.yx.play.util.IntentUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -40,9 +41,9 @@ class MainActivity : AppCompatActivity() {
     private var historyId = ""
     private val PERMISSIONS_REQUEST_CODE = 1
 
-    companion object{
+    companion object {
         fun startIntent(context: Context) {
-            val intent = Intent(context, MainActivity:: class.java)
+            val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
             return
         }
@@ -51,7 +52,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityMainBinding.inflate(layoutInflater).bindView(this)
-//        checkAndRequestPermission()
+        checkAndRequestPermission()
         initView()
         fetchData()
     }
@@ -88,7 +89,8 @@ class MainActivity : AppCompatActivity() {
         mAdapter.setOnItemClickListener { adapter, view, position ->
             val data = mAdapter.data[position]
             if (data !is RecommendItemResponse) return@setOnItemClickListener
-            IntentUtils.intentDetails(this, data.video_id)
+//            IntentUtils.intentDetails(this, data.video_id)
+            getAd()
         }
 
         mBinding.tvSearch.click {
@@ -148,6 +150,78 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    var mttFullVideoAd: TTFullScreenVideoAd? = null
+    private fun getAd() {
+        val mTTAdNative = TTAdSdk.getAdManager().createAdNative(this)
+        val adSlot = AdSlot.Builder()
+            .setCodeId("952503885")
+            .setSupportDeepLink(true)
+            .setAdLoadType(TTAdLoadType.PRELOAD)//推荐使用，用于标注此次的广告请求用途为预加载（当做缓存）还是实时加载，方便后续为开发者优化相关策略
+            .build()
+
+
+        mTTAdNative.loadFullScreenVideoAd(
+            adSlot,
+            object : TTAdNative.FullScreenVideoAdListener {
+                override fun onError(p0: Int, p1: String?) {
+                    Log.w("app", "onError: $p0  $p1")
+                }
+
+                override fun onFullScreenVideoAdLoad(p0: TTFullScreenVideoAd?) {
+                    if (mttFullVideoAd != null) {
+                        return
+                    }
+                    mttFullVideoAd = p0
+                    showAd()
+                }
+
+                override fun onFullScreenVideoCached() {
+                }
+
+                override fun onFullScreenVideoCached(p0: TTFullScreenVideoAd?) {
+                    if (mttFullVideoAd != null) {
+                        return
+                    }
+                    mttFullVideoAd = p0
+                    showAd()
+                }
+            }
+        )
+    }
+
+    private fun showAd(){
+        mttFullVideoAd?.setFullScreenVideoAdInteractionListener(object :
+            FullScreenVideoAdInteractionListener{
+            override fun onAdShow() {
+
+            }
+
+            override fun onAdVideoBarClick() {
+
+            }
+
+            override fun onAdClose() {
+
+            }
+
+            override fun onVideoComplete() {
+
+            }
+
+            override fun onSkippedVideo() {
+
+            }
+        })
+        mttFullVideoAd?.showFullScreenVideoAd(
+            this@MainActivity,
+            TTAdConstant.RitScenes.CUSTOMIZE_SCENES,
+            "scenes_test"
+        );
+        mttFullVideoAd = null
+    }
+
+
 
     fun getHeaderName(pos: Int): String? {
 //
