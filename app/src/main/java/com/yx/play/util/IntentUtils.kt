@@ -26,7 +26,7 @@ object IntentUtils {
         id: String,
     ) {
 
-        DetalisActivity.newInstance(context, id)
+//        DetalisActivity.newInstance(context, id)
         return
 //        val isOpenReward = DataBaseManager.getInstance().getIsOpenReward()
 //        if (isOpenReward){

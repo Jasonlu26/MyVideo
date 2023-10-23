@@ -211,4 +211,10 @@ dependencies {
 
     implementation "com.github.razerdp:BasePopup:2.2.7"
 
+    implementation 'io.github.youth5201314:banner:2.2.2'
+
+    implementation 'io.github.lucksiege:pictureselector:v3.11.1'
+
+    implementation 'com.contrarywind:Android-PickerView:4.1.9'
+
 }

@@ -7,42 +7,55 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
+import androidx.appcompat.widget.AppCompatTextView
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
+import androidx.recyclerview.widget.RecyclerView
+import com.blankj.utilcode.util.SPUtils
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.youth.banner.adapter.BannerAdapter
 import com.yx.play.R
 import com.yx.play.api.Recommend
 import com.yx.play.api.RecommendItemResponse
 import com.yx.play.databinding.ActivityMainBinding
 import com.yx.play.db.DataBaseManager
+import com.yx.play.db.model.KaPianModel
 import com.yx.play.ext.*
 import com.yx.play.net.ResponseResult
 import com.yx.play.util.DateUtil
+import com.yx.play.util.ImageIdUtils
 import com.yx.play.util.IntentUtils
+import com.yx.play.util.JsonFileUtils
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import java.io.File
 import java.math.BigDecimal
 
 
 class MainActivity : AppCompatActivity() {
 
-    private var mAdapter = VideoRecommendAdapter(mutableListOf())
+    //    private var mAdapter = VideoRecommendAdapter(mutableListOf())
     private lateinit var mBinding: ActivityMainBinding
     private val gridManager = GridLayoutManager(this, 3)
 
     private var historyId = ""
     private val PERMISSIONS_REQUEST_CODE = 1
 
-    companion object{
+    companion object {
         fun startIntent(context: Context) {
-            val intent = Intent(context, MainActivity:: class.java)
+            val intent = Intent(context, MainActivity::class.java)
             context.startActivity(intent)
             return
         }
@@ -59,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initView() {
 //        mAdapter.addItemBinder(ItemVideoRecommendBinder())
-        mBinding.listView.adapter = mAdapter
+//        mBinding.listView.adapter = mAdapter
 
 //        val decoration = VerticalSectionDecoration.create(this)
 //            .sectionTextSize(R.dimen.sp_16.getDimension().toFloat())
@@ -78,109 +91,126 @@ class MainActivity : AppCompatActivity() {
 //            })
 //            .build()
 //        mBinding.listView.addItemDecoration(decoration)
-        mBinding.listView.addHorizontalItemDecoration(
-            color = R.color.transparent.getColor(),
-            size = 10f.dpToPx(),
-            isShowLastDivider = true
-        )
-        mBinding.listView.layoutManager = gridManager
-
-        mAdapter.setOnItemClickListener { adapter, view, position ->
-            val data = mAdapter.data[position]
-            if (data !is RecommendItemResponse) return@setOnItemClickListener
-            IntentUtils.intentDetails(this, data.video_id)
-        }
-
-        mBinding.tvSearch.click {
-            SearchActivity.startIntent(this)
-        }
-
-        mBinding.layoutHistory.click {
-            if (historyId.isEmpty()) return@click
-            IntentUtils.intentDetails(this, historyId)
-        }
-
-        mBinding.ivHistory.click {
-            HistoryActivity.startIntent(this)
-        }
+//        mBinding.listView.addHorizontalItemDecoration(
+//            color = R.color.transparent.getColor(),
+//            size = 10f.dpToPx(),
+//            isShowLastDivider = true
+//        )
+//        mBinding.listView.layoutManager = gridManager
+//
+//        mAdapter.setOnItemClickListener { adapter, view, position ->
+//            val data = mAdapter.data[position]
+//            if (data !is RecommendItemResponse) return@setOnItemClickListener
+//            IntentUtils.intentDetails(this, data.video_id)
+//        }
+//
+//        mBinding.tvSearch.click {
+//            SearchActivity.startIntent(this)
+//        }
+//
+//        mBinding.layoutHistory.click {
+//            if (historyId.isEmpty()) return@click
+//            IntentUtils.intentDetails(this, historyId)
+//        }
+//
+//        mBinding.ivHistory.click {
+//            HistoryActivity.startIntent(this)
+//        }
     }
 
     private fun fetchData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val result = Recommend.execute()
-            if (result is ResponseResult.Success) {
-                val data = result.value?.toMutableList()
-                val dataMap = data?.groupBy { it.type_id_1 }
-                val list = mutableListOf<MultiItemEntity>()
-                list.add(HearEntity("电影"))
-                list.addAll(
-                    dataMap?.get(1)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
+            val isOpen = SPUtils.getInstance().getBoolean("isOpenKapian", false)
 
-                list.add(HearEntity("电视剧"))
-                list.addAll(
-                    dataMap?.get(2)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
+            if (!isOpen) {
+                JsonFileUtils.readKaPian(this@MainActivity)
+            }
 
-                list.add(HearEntity("综艺"))
-                list.addAll(
-                    dataMap?.get(3)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
+            val list = DataBaseManager.getInstance().getDataBase()?.kapianDao()?.getAllKaPian()
 
-                list.add(HearEntity("动漫"))
-                list.addAll(
-                    dataMap?.get(4)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
-
-                list.add(HearEntity("记录片"))
-                list.addAll(
-                    dataMap?.get(24)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
-                withContext(Dispatchers.Main) {
-                    gridManager.spanSizeLookup = SpecialSpanSizeLookup(list)
-                    mAdapter.setList(list)
+            withContext(Dispatchers.Main) {
+                val adapter = KapianAdapter(list ?: mutableListOf())
+                mBinding.banner.setAdapter(adapter)
+                    .addBannerLifecycleObserver((this@MainActivity))
+                    .setBannerGalleryMZ(20)
+                adapter.setOnBannerListener { data, position ->
+                    DetalisActivity.newInstance(this@MainActivity, data.id)
                 }
             }
-        }
-    }
-
-    fun getHeaderName(pos: Int): String? {
+//            val result = Recommend.execute()
+//            if (result is ResponseResult.Success) {
+//                val data = result.value?.toMutableList()
+//                val dataMap = data?.groupBy { it.type_id_1 }
+//                val list = mutableListOf<MultiItemEntity>()
+//                list.add(HearEntity("电影"))
+//                list.addAll(
+//                    dataMap?.get(1)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
 //
-        return if (pos >= 0 && pos < mAdapter.data.size) {
-            val data = mAdapter.data[pos]
-            if (data is RecommendItemResponse) {
-                return when (data.type_id_1) {
-                    1 -> {
-                        "电影"
-                    }
-                    2 -> {
-                        "电视剧"
-                    }
-                    3 -> {
-                        "综艺"
-                    }
-                    4 -> {
-                        "动漫"
-                    }
-                    24 -> {
-                        "纪录片"
-                    }
-                    else -> {
-                        "其他"
-                    }
-                }
-            } else {
-                null
-            }
-        } else {
-            null
+//                list.add(HearEntity("电视剧"))
+//                list.addAll(
+//                    dataMap?.get(2)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//
+//                list.add(HearEntity("综艺"))
+//                list.addAll(
+//                    dataMap?.get(3)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//
+//                list.add(HearEntity("动漫"))
+//                list.addAll(
+//                    dataMap?.get(4)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//
+//                list.add(HearEntity("记录片"))
+//                list.addAll(
+//                    dataMap?.get(24)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//                withContext(Dispatchers.Main) {
+//                    gridManager.spanSizeLookup = SpecialSpanSizeLookup(list)
+//                    mAdapter.setList(list)
+//                }
+//            }
         }
     }
+
+//    fun getHeaderName(pos: Int): String? {
+////
+//        return if (pos >= 0 && pos < mAdapter.data.size) {
+//            val data = mAdapter.data[pos]
+//            if (data is RecommendItemResponse) {
+//                return when (data.type_id_1) {
+//                    1 -> {
+//                        "电影"
+//                    }
+//                    2 -> {
+//                        "电视剧"
+//                    }
+//                    3 -> {
+//                        "综艺"
+//                    }
+//                    4 -> {
+//                        "动漫"
+//                    }
+//                    24 -> {
+//                        "纪录片"
+//                    }
+//                    else -> {
+//                        "其他"
+//                    }
+//                }
+//            } else {
+//                null
+//            }
+//        } else {
+//            null
+//        }
+//    }
 
     override fun onResume() {
         super.onResume()
@@ -251,6 +281,60 @@ class MainActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
+
+    inner class KapianViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val ivDiary: AppCompatImageView
+        val tvTitle: AppCompatTextView
+        val tvContent: AppCompatTextView
+        val tvAddress: AppCompatTextView
+        val tvTime: AppCompatTextView
+
+
+        init {
+            ivDiary = view.findViewById(R.id.ivDiary)
+            tvTitle = view.findViewById(R.id.tvTitle)
+            tvContent = view.findViewById(R.id.tvContent)
+            tvAddress = view.findViewById(R.id.tvAddress)
+            tvTime = view.findViewById(R.id.tvTime)
+        }
+    }
+
+
+    inner class KapianAdapter(datas: MutableList<KaPianModel>) :
+        BannerAdapter<KaPianModel, KapianViewHolder>(datas) {
+        override fun onCreateHolder(parent: ViewGroup?, viewType: Int): KapianViewHolder {
+            return KapianViewHolder(
+                LayoutInflater.from(parent?.context).inflate(R.layout.item_diary, parent, false)
+            )
+        }
+
+        override fun onBindView(
+            holder: KapianViewHolder?,
+            data: KaPianModel?,
+            position: Int,
+            size: Int
+        ) {
+            holder?.tvTitle?.text = data?.title
+            holder?.tvContent?.text = data?.content
+            holder?.tvAddress?.text = data?.address
+            holder?.tvTime?.text = data?.time
+            if (data?.type != "1") {
+                holder?.ivDiary?.let {
+                    Glide.with(this@MainActivity)
+                        .load(File(data?.img))
+                        .dontAnimate()
+                        .skipMemoryCache(false)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(it)
+                }
+            } else {
+                val resId = ImageIdUtils.getImageId(data.img)
+                holder?.ivDiary?.setImageResource(resId)
+            }
+        }
+    }
+
 //    inner class ItemVideoRecommendBinder :
 //        QuickViewBindingItemBinder<RecommendItemResponse, ItemVideoRecommendBinding>() {
 //        override fun convert(
@@ -281,53 +365,53 @@ class MainActivity : AppCompatActivity() {
 //        ) = ItemVideoRecommendBinding.inflate(layoutInflater, parent, false)
 //    }
 
-    inner class VideoRecommendAdapter : BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
-
-        constructor(data: MutableList<MultiItemEntity>) : super(data) {
-
-            addItemType(0, R.layout.item_recommend_header)
-            addItemType(1, R.layout.item_video_recommend)
-        }
-
-        override fun convert(holder: BaseViewHolder, item: MultiItemEntity) {
-            if (item.itemType == 1) {
-                if (item !is RecommendItemResponse) return
-                if (BigDecimal(item.vod_douban_score).toFloat() == 0.0f) {
-                    holder.setGone(R.id.tvVideoCode, true)
-                } else {
-                    holder.setGone(R.id.tvVideoCode, false)
-//                    holder.viewBinding.tvVideoCode.visible()
-                    holder.setText(R.id.tvVideoCode, item.vod_douban_score)
-                }
-                Glide.with(context)
-                    .load(item.vod_pic)
-                    .dontAnimate()
-//                    .skipMemoryCache(false)
-                    .centerCrop()
-                    .error(R.drawable.uk_image_fail1)
-//                    .override(300f.dpToPx(),300f.dpToPx())
-                    .encodeQuality(40)
-                    .into(holder.getView(R.id.ivVideoThumb))
-                holder.setText(R.id.tvVideoTips, item.vod_remarks)
-                holder.setText(R.id.tvVideoName, item.vod_name)
-            } else if (item.itemType == 0) {
-                if (item !is HearEntity) return
-                holder.setText(R.id.tvHeader, item.name)
-            }
-        }
-    }
-
-    data class HearEntity(val name: String) : MultiItemEntity {
-        override val itemType: Int
-            get() = 0
-    }
-
-    inner class SpecialSpanSizeLookup(val datas: MutableList<MultiItemEntity>?) : SpanSizeLookup() {
-        override fun getSpanSize(i: Int): Int {
-            // 返回在数据中定义的SpanSize
-            val gridItem: MultiItemEntity? = datas?.get(i)
-            if (gridItem?.itemType == 0) return 3
-            return 1
-        }
-    }
+//    inner class VideoRecommendAdapter : BaseMultiItemQuickAdapter<MultiItemEntity, BaseViewHolder> {
+//
+//        constructor(data: MutableList<MultiItemEntity>) : super(data) {
+//
+//            addItemType(0, R.layout.item_recommend_header)
+//            addItemType(1, R.layout.item_video_recommend)
+//        }
+//
+//        override fun convert(holder: BaseViewHolder, item: MultiItemEntity) {
+//            if (item.itemType == 1) {
+//                if (item !is RecommendItemResponse) return
+//                if (BigDecimal(item.vod_douban_score).toFloat() == 0.0f) {
+//                    holder.setGone(R.id.tvVideoCode, true)
+//                } else {
+//                    holder.setGone(R.id.tvVideoCode, false)
+////                    holder.viewBinding.tvVideoCode.visible()
+//                    holder.setText(R.id.tvVideoCode, item.vod_douban_score)
+//                }
+//                Glide.with(context)
+//                    .load(item.vod_pic)
+//                    .dontAnimate()
+////                    .skipMemoryCache(false)
+//                    .centerCrop()
+//                    .error(R.drawable.uk_image_fail1)
+////                    .override(300f.dpToPx(),300f.dpToPx())
+//                    .encodeQuality(40)
+//                    .into(holder.getView(R.id.ivVideoThumb))
+//                holder.setText(R.id.tvVideoTips, item.vod_remarks)
+//                holder.setText(R.id.tvVideoName, item.vod_name)
+//            } else if (item.itemType == 0) {
+//                if (item !is HearEntity) return
+//                holder.setText(R.id.tvHeader, item.name)
+//            }
+//        }
+//    }
+//
+//    data class HearEntity(val name: String) : MultiItemEntity {
+//        override val itemType: Int
+//            get() = 0
+//    }
+//
+//    inner class SpecialSpanSizeLookup(val datas: MutableList<MultiItemEntity>?) : SpanSizeLookup() {
+//        override fun getSpanSize(i: Int): Int {
+//            // 返回在数据中定义的SpanSize
+//            val gridItem: MultiItemEntity? = datas?.get(i)
+//            if (gridItem?.itemType == 0) return 3
+//            return 1
+//        }
+//    }
 }

@@ -3,36 +3,39 @@ package com.yx.play.activity
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
-import android.text.Html
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
+import com.blankj.utilcode.util.ToastUtils
 import com.bumptech.glide.Glide
-import com.yx.play.R
-import com.yx.play.api.Details
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.luck.picture.lib.basic.PictureSelector
+import com.luck.picture.lib.config.SelectMimeType
+import com.luck.picture.lib.entity.LocalMedia
+import com.luck.picture.lib.interfaces.OnResultCallbackListener
 import com.yx.play.databinding.ActivityDetalisBinding
 import com.yx.play.db.DataBaseManager
-import com.yx.play.db.model.YXHistoryRecordModel
+import com.yx.play.db.result.KaPianResult
 import com.yx.play.ext.*
-import com.yx.play.net.ResponseResult
-import kotlinx.coroutines.CoroutineScope
+import com.yx.play.util.FileUtils
+import com.yx.play.util.GlideEngine
+import com.yx.play.util.ImageIdUtils
+import com.yx.play.util.TimePickerUtil
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import java.math.BigDecimal
+import java.io.File
 
 
 class DetalisActivity : AppCompatActivity() {
 
     private lateinit var mBinding: ActivityDetalisBinding
-    private var id: String = ""
+    private var id: Long = 0L
 
-    var name: String = ""
-    var playUrl: String = ""
-    var imageUrl: String = ""
-    var playName: String = ""
+    private var newImg = ""
+    private var img = ""
 
     companion object {
-        fun newInstance(context: Context, id: String) {
+        fun newInstance(context: Context, id: Long) {
             val intent = Intent(context, DetalisActivity::class.java)
             intent.putExtra("id", id)
             context.startActivity(intent)
@@ -42,7 +45,7 @@ class DetalisActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mBinding = ActivityDetalisBinding.inflate(layoutInflater).bindView(this)
-        id = intent.getStringExtra("id") ?: ""
+        id = intent.getLongExtra("id", 0)
         initView()
         fetchData()
     }
@@ -53,69 +56,125 @@ class DetalisActivity : AppCompatActivity() {
             finish()
         }
 
+        mBinding.ivSure.click {
+            if (mBinding.etTitle.text.isNullOrEmpty()) {
+                ToastUtils.showShort("请输入标题")
+                return@click
+            }
+
+            if (mBinding.etAddress.text.isNullOrEmpty()) {
+                ToastUtils.showShort("请输入地址")
+                return@click
+            }
+
+
+            if (mBinding.etContent.text.isNullOrEmpty()) {
+                ToastUtils.showShort("请输入内容")
+                return@click
+            }
+
+            commit()
+        }
+
+        mBinding.ivDiary.click {
+            selectPicture()
+        }
+
+        mBinding.tvTime.click {
+            TimePickerUtil.showDatePick(this)
+                .onComplete { year, month, day ->
+                    mBinding.tvTime.text = "$year-$month-$day"
+                }
+        }
+
     }
 
     private fun fetchData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val result = Details.execute(id)
-            if (result is ResponseResult.Success) {
-                val data = result.value
-                withContext(Dispatchers.Main) {
-                    mBinding.tvVideoName.text = data?.vod_name
-                    mBinding.tvVideoScore.text = if (BigDecimal(data?.vod_douban_score).toFloat() == 0.0f) {
-                        ""
-                    } else {
-                        data?.vod_douban_score
-                    }
+            val model = DataBaseManager.getInstance().getDataBase()?.kapianDao()?.getKaPian(id)
+
+            withContext(Dispatchers.Main) {
+                img = model?.img ?: ""
+                mBinding.etTitle.setText(model?.title)
+                mBinding.etAddress.setText(model?.address)
+                mBinding.tvTime.text = model?.time
+                mBinding.etContent.setText(model?.content)
+
+                if (model?.type != "1") {
 
                     Glide.with(this@DetalisActivity)
-                        .load(data?.vod_pic)
+                        .load(File(model?.img))
                         .dontAnimate()
-//                    .skipMemoryCache(false)
-//                        .centerCrop()
-                        .error(R.drawable.uk_image_fail1)
-//                    .override(300f.dpToPx(),300f.dpToPx())
-                        .into(mBinding.ivVideoPic)
+                        .skipMemoryCache(false)
+                        .centerCrop()
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .into(mBinding.ivDiary)
 
-                    mBinding.tvVideoActor.text = "主演：${data?.vod_actor}"
-                    mBinding.tvVideoDirector.text = "导演：${data?.vod_director}"
-                    mBinding.tvVideoTime.text = "上映时间：${data?.created_time_text?.split(" ")?.getOrNull(0)}"
-                    mBinding.tvVideoArea.text = "地区：${data?.vod_area}"
-                    val typeName = if (data?.vod_class.isNullOrEmpty()) {
-                        data?.type_name
-                    } else {
-                        data?.vod_class
-                    }
-                    mBinding.tvVideoType.text = "类型：$typeName"
-
-
-                    this@DetalisActivity.name = data?.vod_name ?: ""
-                    this@DetalisActivity.imageUrl = data?.vod_pic ?: ""
-
-
-                    mBinding.tvVideoTips.text =
-                            "${Html.fromHtml(data?.vod_content)}"
+                } else {
+                    val resId = ImageIdUtils.getImageId(model.img)
+                    mBinding.ivDiary.setImageResource(resId)
                 }
             }
         }
     }
 
-    override fun finish() {
-        super.finish()
-
-        val model = YXHistoryRecordModel()
-        model.tvId = id
-        model.name = name
-        model.imageUrl = imageUrl
-        model.playUrl = playUrl
-        model.playName = playName
-        model.duration = 10L
-        model.playDuration = 10L
-        model.timeStamp = System.currentTimeMillis()
-        CoroutineScope(Dispatchers.IO).launch {
-            DataBaseManager.getInstance().getDataBase()?.historyDataDao()?.insertHistory(model)
+    private fun commit() {
+        val model = KaPianResult()
+        model.id = id
+        model.title = mBinding.etTitle.text.toString()
+        model.address = mBinding.etAddress.text.toString()
+        model.time = mBinding.tvTime.text.toString()
+        model.content = mBinding.etContent.text.toString()
+        if (newImg.isEmpty()) {
+            model.img = img
+            model.type = "1"
+        } else {
+            model.img = newImg
+            model.type = "2"
         }
 
+        lifecycleScope.launch(Dispatchers.IO) {
+            DataBaseManager.getInstance().getDataBase()?.kapianDao()?.updateKaPian(model)
+
+            withContext(Dispatchers.Main) {
+                finish()
+            }
+        }
+    }
+
+    private fun selectPicture() {
+        PictureSelector.create(this)
+            .openGallery(SelectMimeType.ofImage())
+            .setMaxSelectNum(1)
+            .setImageEngine(GlideEngine.createGlideEngine())
+            .forResult(object : OnResultCallbackListener<LocalMedia?> {
+                override fun onResult(result: ArrayList<LocalMedia?>?) {
+                    if (result.isNullOrEmpty()) return
+                    val media = result.elementAtOrNull(0) ?: return
+
+                    val path = media.realPath
+                    val format = com.blankj.utilcode.util.FileUtils.getFileExtension(path)
+                    val originalCacheFilePath =
+                        FileUtils.getFileCacheDirectory() + System.currentTimeMillis() + "." + format
+                    val isCopy =
+                        com.blankj.utilcode.util.FileUtils.copy(path, originalCacheFilePath)
+
+                    if (isCopy) {
+                        newImg = originalCacheFilePath
+                        Glide.with(this@DetalisActivity)
+                            .load(File(newImg))
+                            .dontAnimate()
+                            .skipMemoryCache(false)
+                            .centerCrop()
+                            .diskCacheStrategy(DiskCacheStrategy.NONE)
+                            .into(mBinding.ivDiary)
+                    }
+                }
+
+                override fun onCancel() {
+
+                }
+            })
     }
 
 }

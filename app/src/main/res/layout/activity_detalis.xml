@@ -5,13 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.DetalisActivity"
+    android:background="@drawable/icon_bg"
     >
 
-    <androidx.appcompat.widget.AppCompatImageView
+    <View
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:src="@drawable/ic_login_page_top_bg"
-        app:layout_constraintDimensionRatio="w,1:1.5"
+        android:background="@drawable/bg_main"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -30,200 +31,183 @@
             android:id="@+id/ivBack"
             android:layout_width="@dimen/dp_44"
             android:layout_height="@dimen/dp_44"
-            android:padding="@dimen/dp_6"
-            android:scaleType="center"
-            android:src="@drawable/uk_back"
+            android:padding="@dimen/dp_8"
+            android:scaleType="fitXY"
+            android:src="@drawable/guanbi"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginStart="@dimen/dp_12"
             />
 
-        <androidx.appcompat.widget.AppCompatTextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="详情"
-            android:textColor="@color/c_0D1324"
-            android:textSize="@dimen/sp_20"
-            android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="parent"
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/ivSure"
+            android:layout_width="@dimen/dp_44"
+            android:layout_height="@dimen/dp_44"
+            android:padding="@dimen/dp_8"
+            android:scaleType="fitXY"
+            android:src="@drawable/check"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginEnd="@dimen/dp_12"
             />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <androidx.core.widget.NestedScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/ivDiary"
+        android:layout_width="@dimen/dp_120"
+        android:layout_height="@dimen/dp_120"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutTitle"
-        app:layout_constraintBottom_toBottomOf="parent"
-        >
-        <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_marginTop="@dimen/dp_20"
+        android:layout_marginStart="@dimen/dp_12"
+        app:shapeAppearanceOverlay="@style/RoundedStyle"
+        android:scaleType="centerCrop"
+        tools:src="@drawable/m_shenghuo_1"/>
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintStart_toEndOf="@id/ivDiary"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/ivDiary"
+        app:layout_constraintBottom_toBottomOf="@id/ivDiary"
+        android:layout_marginStart="@dimen/dp_8"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:orientation="vertical">
+        <androidx.appcompat.widget.LinearLayoutCompat
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/layoutTop"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@drawable/biaoti"
+                android:tint="@color/white"
+                android:scaleType="fitXY"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etTitle"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:paddingHorizontal="@dimen/dp_16"
-                android:paddingTop="@dimen/dp_20"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                >
-
-                <com.google.android.material.imageview.ShapeableImageView
-                    android:id="@+id/ivVideoPic"
-                    android:layout_width="@dimen/dp_160"
-                    android:layout_height="@dimen/dp_160"
-                    android:scaleType="centerCrop"
-                    app:shapeAppearanceOverlay="@style/RoundedStyle"
-                    app:layout_constraintStart_toStartOf="parent"
-                    app:layout_constraintTop_toTopOf="parent"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVideoScore"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_8"
-                    android:layout_marginTop="@dimen/dp_8"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/c_FF4500"
-                    android:textSize="@dimen/sp_24"
-                    app:layout_constraintStart_toStartOf="@id/ivVideoPic"
-                    app:layout_constraintTop_toTopOf="@id/ivVideoPic"
-                    tools:text="9.0"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVideoName"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/dp_16"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/c_0D1324"
-                    android:textSize="@dimen/sp_20"
-                    android:textStyle="bold"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toEndOf="@id/ivVideoPic"
-                    app:layout_constraintTop_toTopOf="@id/ivVideoPic"
-                    tools:text="2012"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVideoActor"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/c_8F9BAF"
-                    android:textSize="@dimen/sp_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvVideoName"
-                    app:layout_constraintTop_toBottomOf="@id/tvVideoName"
-                    android:maxLines="3"
-                    android:ellipsize="end"
-                    tools:text="主演：text"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVideoDirector"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/c_8F9BAF"
-                    android:textSize="@dimen/sp_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvVideoActor"
-                    app:layout_constraintTop_toBottomOf="@id/tvVideoActor"
-                    tools:text="导演：text"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVideoTime"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/c_8F9BAF"
-                    android:textSize="@dimen/sp_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvVideoDirector"
-                    app:layout_constraintTop_toBottomOf="@id/tvVideoDirector"
-                    tools:text="上映时间：text"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVideoArea"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/c_8F9BAF"
-                    android:textSize="@dimen/sp_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvVideoTime"
-                    app:layout_constraintTop_toBottomOf="@id/tvVideoTime"
-                    tools:text="国家：text"
-                    />
-
-                <androidx.appcompat.widget.AppCompatTextView
-                    android:id="@+id/tvVideoType"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/dp_6"
-                    android:includeFontPadding="false"
-                    android:textColor="@color/c_8F9BAF"
-                    android:textSize="@dimen/sp_16"
-                    app:layout_constraintEnd_toEndOf="parent"
-                    app:layout_constraintStart_toStartOf="@id/tvVideoArea"
-                    app:layout_constraintTop_toBottomOf="@id/tvVideoArea"
-                    tools:text="国家：text"
-                    />
-
-            </androidx.constraintlayout.widget.ConstraintLayout>
-
-
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvVideoTipsTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_8"
-                android:includeFontPadding="false"
-                android:text="简介"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_4"
+                android:gravity="center_vertical"
                 android:textColor="@color/c_0D1324"
-                android:textSize="@dimen/sp_18"
-                android:textStyle="bold"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/layoutTop"
-                />
+                android:textSize="@dimen/sp_14"
+                android:background="@null"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColorHint="@color/c_8F9BAF"
+                android:hint="请输入标题"
+                android:maxLength="8"
+                tools:text="欣赏生活欣赏生活"/>
 
-            <androidx.appcompat.widget.AppCompatTextView
-                android:id="@+id/tvVideoTips"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/dp_16"
-                android:layout_marginTop="@dimen/dp_6"
-                android:layout_marginEnd="@dimen/dp_16"
-                android:includeFontPadding="false"
-                android:textColor="@color/c_8F9BAF"
-                android:textSize="@dimen/sp_16"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvVideoTipsTitle"
-                tools:text="2012"
-                />
-
-            <View
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dp_5">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@drawable/dizhi"
+                android:tint="@color/white"
+                android:scaleType="fitXY"/>
+            <androidx.appcompat.widget.AppCompatEditText
+                android:id="@+id/etAddress"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/dp_40"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tvVideoTips"/>
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_4"
+                android:gravity="center_vertical"
+                android:textColor="@color/c_0D1324"
+                android:textSize="@dimen/sp_14"
+                android:background="@null"
+                android:imeOptions="actionSend"
+                android:inputType="text"
+                android:singleLine="true"
+                android:textColorHint="@color/c_8F9BAF"
+                android:hint="请输入位置"
+                android:maxLength="10"
+                tools:text="欣赏生活欣赏生活欣赏生活"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/layoutTime"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/dp_0"
+            android:layout_weight="1"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:layout_marginTop="@dimen/dp_5">
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_width="@dimen/dp_20"
+                android:layout_height="@dimen/dp_20"
+                android:src="@drawable/shijian"
+                android:tint="@color/white"
+                android:scaleType="fitXY"/>
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tvTime"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/dp_4"
+                android:gravity="center_vertical"
+                android:textColor="@color/c_0D1324"
+                android:textSize="@dimen/sp_14"
+                tools:text="2020-12-13"/>
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.core.widget.NestedScrollView>
+
+    <View
+        android:id="@+id/line1"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/white_alpha_50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/ivDiary"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_8"/>
+
+    <androidx.appcompat.widget.AppCompatEditText
+        android:id="@+id/etContent"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:minHeight="@dimen/dp_100"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/line1"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_8"
+        android:gravity="top"
+        android:textColor="@color/c_0D1324"
+        android:textSize="@dimen/sp_16"
+        android:background="@null"
+        android:imeOptions="actionSend"
+        android:inputType="textMultiLine"
+        android:maxLines="5"
+        android:textColorHint="@color/c_8F9BAF"
+        android:hint="请输入内容"
+        tools:text="shdasnddshdasndd"/>
+
+    <View
+        android:id="@+id/line2"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_2"
+        android:background="@color/white_alpha_50"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/etContent"
+        android:layout_marginStart="@dimen/dp_12"
+        android:layout_marginEnd="@dimen/dp_12"
+        android:layout_marginTop="@dimen/dp_8"/>
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
