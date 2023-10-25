@@ -30,6 +30,11 @@
         <item name="cornerSize">@dimen/dp_8</item>
     </style>
 
+    <style name="CircleStyle">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSize">@dimen/dp_40</item>
+    </style>
+
     <style name="SplashActivityTheme"
         parent="Theme.AppCompat.Light.NoActionBar">
         <!-- All customizations that are NOT specific to a particular API-level can go here. -->

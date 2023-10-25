@@ -1,0 +1,246 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    >
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginTop="@dimen/dp_24"
+            android:layout_marginStart="@dimen/dp_16"
+            android:text="恋爱清单"
+            android:textColor="@color/c_FF4500"
+            android:textStyle="bold"
+            android:fontFamily="@font/font2"
+            android:textSize="@dimen/sp_40"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListTips"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvListTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvListTitle"
+            android:layout_marginTop="@dimen/dp_4"
+            android:text="情侣必备的100件事"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="italic"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tv1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvListTitle"
+            app:layout_constraintTop_toBottomOf="@id/tvListTips"
+            android:layout_marginTop="@dimen/dp_20"
+            android:includeFontPadding="false"
+            android:text="已完成"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_18"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListCount"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tv1"
+            app:layout_constraintTop_toTopOf="@id/tv1"
+            app:layout_constraintBottom_toBottomOf="@id/tv1"
+            android:layout_marginStart="@dimen/dp_4"
+            android:includeFontPadding="false"
+            android:text="0/100"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_32"
+            android:textStyle="bold"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListTitle1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvListTitle"
+            app:layout_constraintTop_toBottomOf="@id/tv1"
+            android:layout_marginTop="@dimen/dp_30"
+            android:includeFontPadding="false"
+            android:gravity="center_vertical"
+            android:text="爱之初体验"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/aiqing"
+            android:drawablePadding="@dimen/dp_4"/>
+        
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListCount1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvListTitle1"
+            app:layout_constraintBottom_toBottomOf="@id/tvListTitle1"
+            app:layout_constraintTop_toTopOf="@id/tvListTitle1"
+            android:layout_marginStart="@dimen/dp_8"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_16"
+            android:text="0/33"/>
+        
+        <RelativeLayout
+            android:id="@+id/layout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvListTitle1"
+            android:layout_marginTop="@dimen/dp_12">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"/>
+        </RelativeLayout>
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListTitle2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvListTitle"
+            app:layout_constraintTop_toBottomOf="@id/layout1"
+            android:layout_marginTop="@dimen/dp_30"
+            android:includeFontPadding="false"
+            android:gravity="center_vertical"
+            android:text="享受慢时光"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/aiqing"
+            android:drawablePadding="@dimen/dp_4"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListCount2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvListTitle2"
+            app:layout_constraintBottom_toBottomOf="@id/tvListTitle2"
+            app:layout_constraintTop_toTopOf="@id/tvListTitle2"
+            android:layout_marginStart="@dimen/dp_8"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_16"
+            android:text="0/33"/>
+
+        <RelativeLayout
+            android:id="@+id/layout2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvListTitle2"
+            android:layout_marginTop="@dimen/dp_12">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"/>
+        </RelativeLayout>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListTitle3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvListTitle"
+            app:layout_constraintTop_toBottomOf="@id/layout2"
+            android:layout_marginTop="@dimen/dp_30"
+            android:includeFontPadding="false"
+            android:gravity="center_vertical"
+            android:text="享受慢时光"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/aiqing"
+            android:drawablePadding="@dimen/dp_4"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListCount3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvListTitle3"
+            app:layout_constraintBottom_toBottomOf="@id/tvListTitle3"
+            app:layout_constraintTop_toTopOf="@id/tvListTitle3"
+            android:layout_marginStart="@dimen/dp_8"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_16"
+            android:text="0/33"/>
+
+        <RelativeLayout
+            android:id="@+id/layout3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvListTitle3"
+            android:layout_marginTop="@dimen/dp_12">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv3"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"/>
+        </RelativeLayout>
+
+
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListTitle4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toStartOf="@id/tvListTitle"
+            app:layout_constraintTop_toBottomOf="@id/layout3"
+            android:layout_marginTop="@dimen/dp_30"
+            android:includeFontPadding="false"
+            android:gravity="center_vertical"
+            android:text="享受慢时光"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_20"
+            android:textStyle="bold"
+            android:drawableStart="@drawable/aiqing"
+            android:drawablePadding="@dimen/dp_4"/>
+
+        <androidx.appcompat.widget.AppCompatTextView
+            android:id="@+id/tvListCount4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintStart_toEndOf="@id/tvListTitle4"
+            app:layout_constraintBottom_toBottomOf="@id/tvListTitle4"
+            app:layout_constraintTop_toTopOf="@id/tvListTitle4"
+            android:layout_marginStart="@dimen/dp_8"
+            android:textColor="@color/c_FF4500"
+            android:textSize="@dimen/sp_16"
+            android:text="0/33"/>
+
+        <RelativeLayout
+            android:id="@+id/layout4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tvListTitle4"
+            android:layout_marginTop="@dimen/dp_12">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv4"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_8"/>
+        </RelativeLayout>
+
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.core.widget.NestedScrollView>

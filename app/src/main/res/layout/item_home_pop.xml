@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="@dimen/dp_80"
+    android:layout_height="@dimen/dp_40"
+    android:id="@+id/tvChatInfoMoreAction"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingStart="@dimen/dp_16"
+    android:paddingEnd="@dimen/dp_16"
+    android:gravity="start|center_vertical"
+    android:includeFontPadding="false"
+    android:textColor="@color/c_FFC0CB"
+    android:textSize="@dimen/sp_16"
+    android:background="@drawable/state_pressed_drawable"
+    android:drawablePadding="@dimen/dp_16"
+    tools:text="Report"
+    />

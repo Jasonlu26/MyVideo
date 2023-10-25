@@ -217,4 +217,8 @@ dependencies {
 
     implementation 'com.contrarywind:Android-PickerView:4.1.9'
 
+    implementation "com.github.donkingliang:ConsecutiveScroller:4.6.3"
+
+    implementation 'com.don:clockviewlibrary:1.0.1'
+
 }

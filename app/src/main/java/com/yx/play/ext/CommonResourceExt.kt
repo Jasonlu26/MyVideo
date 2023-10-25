@@ -1,8 +1,10 @@
 package com.yx.play.ext
 
 import android.app.Activity
+import android.graphics.Outline
 import android.os.SystemClock
 import android.view.View
+import android.view.ViewOutlineProvider
 import androidx.viewbinding.ViewBinding
 import com.blankj.utilcode.util.ColorUtils
 import com.blankj.utilcode.util.ResourceUtils
@@ -74,6 +76,23 @@ inline fun View.click(debounceTime: Long = 600, crossinline block: (View) -> Uni
             lastClickTime = SystemClock.elapsedRealtime()
         }
     })
+}
+
+fun View.setOutlineProvider(corner: Float) {
+    val outLine = object : ViewOutlineProvider() {
+        override fun getOutline(view: View?, outline: Outline?) {
+            outline?.setRoundRect(
+                0,
+                0,
+                view?.width ?: 0,
+                view?.height ?: 0,
+                corner
+            )
+        }
+    }
+
+    outlineProvider = outLine
+    clipToOutline = true
 }
 
 const val DIMEN_DP_PREFIX = "dp_"

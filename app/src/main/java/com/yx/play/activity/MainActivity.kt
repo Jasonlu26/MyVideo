@@ -14,10 +14,14 @@ import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.GridLayoutManager.SpanSizeLookup
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewpager2.adapter.FragmentStateAdapter
 import com.blankj.utilcode.util.SPUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -32,6 +36,10 @@ import com.yx.play.databinding.ActivityMainBinding
 import com.yx.play.db.DataBaseManager
 import com.yx.play.db.model.KaPianModel
 import com.yx.play.ext.*
+import com.yx.play.fragment.BaseFragment
+import com.yx.play.fragment.HomeFragment
+import com.yx.play.fragment.ListFragment
+import com.yx.play.fragment.MeFragment
 import com.yx.play.net.ResponseResult
 import com.yx.play.util.DateUtil
 import com.yx.play.util.ImageIdUtils
@@ -53,6 +61,12 @@ class MainActivity : AppCompatActivity() {
     private var historyId = ""
     private val PERMISSIONS_REQUEST_CODE = 1
 
+    private val fragments: Map<Int, BaseFragment> = mapOf(
+        0 to HomeFragment(),
+        1 to ListFragment(),
+        2 to MeFragment(),
+    )
+
     companion object {
         fun startIntent(context: Context) {
             val intent = Intent(context, MainActivity::class.java)
@@ -71,111 +85,117 @@ class MainActivity : AppCompatActivity() {
 
 
     private fun initView() {
-//        mAdapter.addItemBinder(ItemVideoRecommendBinder())
-//        mBinding.listView.adapter = mAdapter
+        mBinding.vpHome.adapter = MainVpAdapter(this, fragments)
+        mBinding.vpHome.setCurrentItem(0, false)
+        mBinding.vpHome.isUserInputEnabled = false
+        mBinding.vpHome.offscreenPageLimit = 3
 
-//        val decoration = VerticalSectionDecoration.create(this)
-//            .sectionTextSize(R.dimen.sp_16.getDimension().toFloat())
-//            .sectionTextColor(R.color.text_0D1324.getColor())
-//            .sectionTextLeftOffset(R.dimen.dp_16.getDimension().toFloat())
-//            .sectionSize(R.dimen.dp_30.getDimension())
-//            .size(R.dimen.dp_0_5.getDimension())
-//            .sectionDrawable(R.drawable.decoration_contact_section_bg)
-////            .drawable(R.drawable.decoration_contact_list_bg)
-//            .showLast(false)
-//            .sectionProvider(object : VerticalSectionDecoration.SectionProvider {
-//                override fun sectionName(position: Int, parent: RecyclerView?): String? {
-//                    return getHeaderName(position)
-//                }
-//
-//            })
-//            .build()
-//        mBinding.listView.addItemDecoration(decoration)
-//        mBinding.listView.addHorizontalItemDecoration(
-//            color = R.color.transparent.getColor(),
-//            size = 10f.dpToPx(),
-//            isShowLastDivider = true
-//        )
-//        mBinding.listView.layoutManager = gridManager
-//
-//        mAdapter.setOnItemClickListener { adapter, view, position ->
-//            val data = mAdapter.data[position]
-//            if (data !is RecommendItemResponse) return@setOnItemClickListener
-//            IntentUtils.intentDetails(this, data.video_id)
-//        }
-//
-//        mBinding.tvSearch.click {
-//            SearchActivity.startIntent(this)
-//        }
-//
-//        mBinding.layoutHistory.click {
-//            if (historyId.isEmpty()) return@click
-//            IntentUtils.intentDetails(this, historyId)
-//        }
-//
-//        mBinding.ivHistory.click {
-//            HistoryActivity.startIntent(this)
-//        }
+        mBinding.tab0.click {
+            mBinding.vpHome.setCurrentItem(0, false)
+            setCurrentItem(0)
+        }
+
+        mBinding.tab1.click {
+            mBinding.vpHome.setCurrentItem(1, false)
+            setCurrentItem(1)
+        }
+
+        mBinding.tab2.click {
+            mBinding.vpHome.setCurrentItem(2, false)
+            setCurrentItem(2)
+        }
     }
 
     private fun fetchData() {
         lifecycleScope.launch(Dispatchers.IO) {
-            val isOpen = SPUtils.getInstance().getBoolean("isOpenKapian", false)
-
-            if (!isOpen) {
-                JsonFileUtils.readKaPian(this@MainActivity)
+            val datas = SPUtils.getInstance().getStringSet("geyan").toMutableSet()
+            if (datas.isEmpty()) {
+                JsonFileUtils.readGeYan(this@MainActivity)
             }
+        }
+    }
 
-            val list = DataBaseManager.getInstance().getDataBase()?.kapianDao()?.getAllKaPian()
-
-            withContext(Dispatchers.Main) {
-                val adapter = KapianAdapter(list ?: mutableListOf())
-                mBinding.banner.setAdapter(adapter)
-                    .addBannerLifecycleObserver((this@MainActivity))
-                    .setBannerGalleryMZ(20)
-                adapter.setOnBannerListener { data, position ->
-                    DetalisActivity.newInstance(this@MainActivity, data.id)
-                }
+    private fun setCurrentItem(i: Int) {
+        mBinding.indexTab0Img.setImageDrawable(
+            ContextCompat.getDrawable(
+                this@MainActivity,
+                R.drawable.tab_1_off
+            )
+        )
+        mBinding.indexTab1Img.setImageDrawable(
+            ContextCompat.getDrawable(
+                this@MainActivity,
+                R.drawable.tab_2_off
+            )
+        )
+        mBinding.indexTab2Img.setImageDrawable(
+            ContextCompat.getDrawable(
+                this@MainActivity,
+                R.drawable.tab_3_off
+            )
+        )
+        mBinding.indexTab0Text.setTextColor(
+            ContextCompat.getColor(
+                this@MainActivity,
+                R.color.c_8F9BAF
+            )
+        )
+        mBinding.indexTab1Text.setTextColor(
+            ContextCompat.getColor(
+                this@MainActivity,
+                R.color.c_8F9BAF
+            )
+        )
+        mBinding.indexTab2Text.setTextColor(
+            ContextCompat.getColor(
+                this@MainActivity,
+                R.color.c_8F9BAF
+            )
+        )
+        when (i) {
+            0 -> {
+                mBinding.indexTab0Img.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this@MainActivity,
+                        R.drawable.tab_1_on
+                    )
+                )
+                mBinding.indexTab0Text.setTextColor(
+                    ContextCompat.getColor(
+                        this@MainActivity,
+                        R.color.c_FF4500
+                    )
+                )
             }
-//            val result = Recommend.execute()
-//            if (result is ResponseResult.Success) {
-//                val data = result.value?.toMutableList()
-//                val dataMap = data?.groupBy { it.type_id_1 }
-//                val list = mutableListOf<MultiItemEntity>()
-//                list.add(HearEntity("电影"))
-//                list.addAll(
-//                    dataMap?.get(1)
-//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-//                        ?: mutableListOf())
-//
-//                list.add(HearEntity("电视剧"))
-//                list.addAll(
-//                    dataMap?.get(2)
-//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-//                        ?: mutableListOf())
-//
-//                list.add(HearEntity("综艺"))
-//                list.addAll(
-//                    dataMap?.get(3)
-//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-//                        ?: mutableListOf())
-//
-//                list.add(HearEntity("动漫"))
-//                list.addAll(
-//                    dataMap?.get(4)
-//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-//                        ?: mutableListOf())
-//
-//                list.add(HearEntity("记录片"))
-//                list.addAll(
-//                    dataMap?.get(24)
-//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-//                        ?: mutableListOf())
-//                withContext(Dispatchers.Main) {
-//                    gridManager.spanSizeLookup = SpecialSpanSizeLookup(list)
-//                    mAdapter.setList(list)
-//                }
-//            }
+            1 -> {
+                mBinding.indexTab1Img.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this@MainActivity,
+                        R.drawable.tab_2_on
+                    )
+                )
+                mBinding.indexTab1Text.setTextColor(
+                    ContextCompat.getColor(
+                        this@MainActivity,
+                        R.color.c_FF4500
+                    )
+                )
+            }
+            2 -> {
+                mBinding.indexTab2Img.setImageDrawable(
+                    ContextCompat.getDrawable(
+                        this@MainActivity,
+                        R.drawable.tab_3_on
+                    )
+                )
+                mBinding.indexTab2Text.setTextColor(
+                    ContextCompat.getColor(
+                        this@MainActivity,
+                        R.color.c_FF4500
+                    )
+                )
+            }
+            else -> {}
         }
     }
 
@@ -281,59 +301,18 @@ class MainActivity : AppCompatActivity() {
         return super.onKeyDown(keyCode, event)
     }
 
+    inner class MainVpAdapter(
+        val fragmentActivity: FragmentActivity,
+        private val fragments: Map<Int, BaseFragment>,
+    ) : FragmentStateAdapter(fragmentActivity) {
 
-    inner class KapianViewHolder(view: View) : RecyclerView.ViewHolder(view) {
-        val ivDiary: AppCompatImageView
-        val tvTitle: AppCompatTextView
-        val tvContent: AppCompatTextView
-        val tvAddress: AppCompatTextView
-        val tvTime: AppCompatTextView
+        override fun getItemCount() = fragments.size
 
+        override fun createFragment(position: Int): Fragment =
+            fragments[position] ?: error("")
 
-        init {
-            ivDiary = view.findViewById(R.id.ivDiary)
-            tvTitle = view.findViewById(R.id.tvTitle)
-            tvContent = view.findViewById(R.id.tvContent)
-            tvAddress = view.findViewById(R.id.tvAddress)
-            tvTime = view.findViewById(R.id.tvTime)
-        }
     }
 
-
-    inner class KapianAdapter(datas: MutableList<KaPianModel>) :
-        BannerAdapter<KaPianModel, KapianViewHolder>(datas) {
-        override fun onCreateHolder(parent: ViewGroup?, viewType: Int): KapianViewHolder {
-            return KapianViewHolder(
-                LayoutInflater.from(parent?.context).inflate(R.layout.item_diary, parent, false)
-            )
-        }
-
-        override fun onBindView(
-            holder: KapianViewHolder?,
-            data: KaPianModel?,
-            position: Int,
-            size: Int
-        ) {
-            holder?.tvTitle?.text = data?.title
-            holder?.tvContent?.text = data?.content
-            holder?.tvAddress?.text = data?.address
-            holder?.tvTime?.text = data?.time
-            if (data?.type != "1") {
-                holder?.ivDiary?.let {
-                    Glide.with(this@MainActivity)
-                        .load(File(data?.img))
-                        .dontAnimate()
-                        .skipMemoryCache(false)
-                        .centerCrop()
-                        .diskCacheStrategy(DiskCacheStrategy.NONE)
-                        .into(it)
-                }
-            } else {
-                val resId = ImageIdUtils.getImageId(data.img)
-                holder?.ivDiary?.setImageResource(resId)
-            }
-        }
-    }
 
 //    inner class ItemVideoRecommendBinder :
 //        QuickViewBindingItemBinder<RecommendItemResponse, ItemVideoRecommendBinding>() {

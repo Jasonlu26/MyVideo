@@ -20,6 +20,7 @@
             android:padding="@dimen/dp_6"
             android:scaleType="centerInside"
             android:src="@drawable/ic_more"
+            android:tint="@color/white"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             />
@@ -29,7 +30,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="恋爱卡片"
-            android:textColor="@color/c_0D1324"
+            android:textColor="@color/white"
             android:textSize="@dimen/sp_20"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

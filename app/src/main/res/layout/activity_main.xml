@@ -70,7 +70,7 @@
                 android:layout_centerHorizontal="true"
                 android:layout_marginBottom="5dp"
                 android:text="首页"
-                android:textColor="@color/c_theme"
+                android:textColor="@color/c_FF4500"
                 android:textSize="@dimen/sp_10"
                 />
         </RelativeLayout>

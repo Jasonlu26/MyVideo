@@ -21,6 +21,9 @@ interface KaPianDao {
     @Query("SELECT * FROM yx_kapian")
     suspend fun getAllKaPian(): MutableList<KaPianModel>?
 
+    @Query("SELECT * FROM yx_kapian where contentType = (:contentType)")
+    suspend fun getTypeKaPian(contentType: String?): MutableList<KaPianModel>?
+
 
     @Query("SELECT * FROM yx_kapian where id = (:id)")
     suspend fun getKaPian(id: Long): KaPianModel?

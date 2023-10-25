@@ -73,12 +73,22 @@
             android:name=".activity.DetalisActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.QingDanDetalisActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".activity.SearchActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
             android:name=".activity.HistoryActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".activity.TimeActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 

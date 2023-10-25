@@ -1,6 +1,8 @@
 package com.yx.play.util;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Locale;
 
 /**
@@ -27,5 +29,11 @@ public class DateUtil {
 //        Formatter formatter = new Formatter(formatBuilder, Locale.getDefault());
 //        String standardTime = Util.getStringForTime(formatBuilder, formatter, millis);
         return standardTime;
+    }
+
+    public static Long getBetweenDays(String time) {
+        LocalDate date1 = LocalDate.now();
+        LocalDate date2 = LocalDate.parse(time);
+        return Math.abs(ChronoUnit.DAYS.between(date2, date1));
     }
 }

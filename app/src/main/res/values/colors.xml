@@ -34,4 +34,6 @@
     <color name="c_FF4500">#FF4500</color>
     <color name="c_8F9BAF">#8F9BAF</color>
     <color name="c_theme">#4F80FF</color>
+
+    <color name="c_FFC0CB">#FFC0CB</color>
 </resources>

@@ -8,6 +8,9 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.yx.play.db.DataBaseManager
 import com.yx.play.db.model.KaPianModel
+import com.yx.play.db.model.QingDanModel
+import com.yx.play.ext.fromStringListJson
+import com.yx.play.ext.toEntityList
 import com.yx.play.ext.toJson
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -156,13 +159,80 @@ object JsonFileUtils {
         val geyan: String
     )
 
-    data class Data(
-        val 学习: Category,
-        val 生活: Category,
-        val 运动: Category,
-        val 享受: Category,
-        val 时光: Category,
-        val 旅行: Category,
-        val 欣赏: Category,
+    fun readQingDan(context: Context) {
+        var br: BufferedReader? = null
+        var fileName = "lianaiqingdan.json"
+        try {
+            br = BufferedReader(InputStreamReader(context.resources.assets.open(fileName)))
+            var line: String? = null
+            val sb = StringBuilder()
+            while (br.readLine().also { line = it } != null) {
+                sb.append(line)
+            }
+            br.close()
+            val json = sb.toString().trimIndent()
+
+            val datas = json.toEntityList<QingDan>()?.toMutableList() ?: return
+
+            val list = mutableListOf<QingDanModel>()
+
+            datas.forEach { qingDan ->
+                qingDan.des.forEach { data ->
+
+                    val model = QingDanModel()
+                    model.contentType = qingDan.name
+                    model.img = "p_moren_img"
+                    model.title = data.title
+                    model.type = data.type
+
+                    list.add(model)
+
+                }
+            }
+
+            DataBaseManager.getInstance().getDataBase()?.qingdanDao()?.insert(list)
+            SPUtils.getInstance().put("isOpenQingDan", true)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            br?.close()
+        }
+    }
+
+    data class QingDan(
+        val des: MutableList<QingDanData> = mutableListOf(),
+        val name: String = ""
     )
+
+    data class QingDanData(
+        val img: String = "",
+        val title: String = "",
+        val type: String = "1"
+    )
+
+
+    fun readGeYan(context: Context) {
+        var br: BufferedReader? = null
+        var fileName = "geyan.json"
+        try {
+            br = BufferedReader(InputStreamReader(context.resources.assets.open(fileName)))
+            var line: String? = null
+            val sb = StringBuilder()
+            while (br.readLine().also { line = it } != null) {
+                sb.append(line)
+            }
+            br.close()
+            val json = sb.toString().trimIndent()
+
+            val datas = fromStringListJson(json).toMutableSet()
+
+            SPUtils.getInstance().put("geyan", datas)
+
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            br?.close()
+        }
+    }
 }

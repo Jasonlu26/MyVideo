@@ -91,7 +91,7 @@ object ImageIdUtils {
             "m_yundong_7" -> R.drawable.m_yundong_7
             "m_yundong_8" -> R.drawable.m_yundong_8
             "m_yundong_9" -> R.drawable.m_yundong_9
-
+            "p_moren_img" -> R.drawable.p_moren_img
             else -> 0
         }
     }

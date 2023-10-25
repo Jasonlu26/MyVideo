@@ -94,14 +94,14 @@ class DetalisActivity : AppCompatActivity() {
             val model = DataBaseManager.getInstance().getDataBase()?.kapianDao()?.getKaPian(id)
 
             withContext(Dispatchers.Main) {
-                img = model?.img ?: ""
+
                 mBinding.etTitle.setText(model?.title)
                 mBinding.etAddress.setText(model?.address)
                 mBinding.tvTime.text = model?.time
                 mBinding.etContent.setText(model?.content)
 
                 if (model?.type != "1") {
-
+                    newImg = model?.img ?: ""
                     Glide.with(this@DetalisActivity)
                         .load(File(model?.img))
                         .dontAnimate()
@@ -111,6 +111,7 @@ class DetalisActivity : AppCompatActivity() {
                         .into(mBinding.ivDiary)
 
                 } else {
+                    img = model?.img ?: ""
                     val resId = ImageIdUtils.getImageId(model.img)
                     mBinding.ivDiary.setImageResource(resId)
                 }
