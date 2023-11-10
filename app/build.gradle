@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.yx.play'
+    namespace 'com.sccdwxxyljx.com'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.yx.play"
+        applicationId "com.sccdwxxyljx.com"
         multiDexEnabled true
         minSdk 26
         targetSdk 33

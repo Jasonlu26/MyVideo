@@ -1,6 +1,6 @@
 package com.yx.play.util
 
-import com.yx.play.R
+import com.sccdwxxyljx.com.R
 
 /**
  * @description

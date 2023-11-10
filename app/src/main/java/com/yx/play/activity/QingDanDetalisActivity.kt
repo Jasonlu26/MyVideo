@@ -12,13 +12,11 @@ import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
-import com.yx.play.databinding.ActivityDetalisBinding
-import com.yx.play.databinding.ActivityQingdanDetalisBinding
+import com.sccdwxxyljx.com.databinding.ActivityQingdanDetalisBinding
 import com.yx.play.db.DataBaseManager
-import com.yx.play.db.model.QingDanModel
-import com.yx.play.db.result.KaPianResult
 import com.yx.play.db.result.QingDanResult
-import com.yx.play.ext.*
+import com.yx.play.ext.bindView
+import com.yx.play.ext.click
 import com.yx.play.util.FileUtils
 import com.yx.play.util.GlideEngine
 import com.yx.play.util.ImageIdUtils

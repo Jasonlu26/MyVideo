@@ -6,8 +6,8 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.blankj.utilcode.util.SPUtils
 import com.blankj.utilcode.util.SpanUtils
-import com.yx.play.R
-import com.yx.play.databinding.ActivityTimeBinding
+import com.sccdwxxyljx.com.R
+import com.sccdwxxyljx.com.databinding.ActivityTimeBinding
 import com.yx.play.ext.bindView
 import com.yx.play.ext.click
 import com.yx.play.ext.dpToPx
@@ -44,20 +44,18 @@ class TimeActivity : AppCompatActivity() {
         }
 
         mBinding.tvTime.click {
-            mBinding.tvTime.click {
-                TimePickerUtil.showDatePick(this)
-                    .onComplete { year, month, day ->
-                        val time = "$year-$month-$day"
-                        SPUtils.getInstance().put("yxTime", time)
-                        val days = DateUtil.getBetweenDays(time)
+            TimePickerUtil.showDatePick(this)
+                .onComplete { year, month, day ->
+                    val time = "$year-$month-$day"
+                    SPUtils.getInstance().put("yxTime", time)
+                    val days = DateUtil.getBetweenDays(time)
 
-                        mBinding.tvTime.text = SpanUtils().append("我们已经在一起")
-                            .append("$days")
-                            .setForegroundColor(R.color.c_FF4500.getColor())
-                            .append("天了")
-                            .create()
-                    }
-            }
+                    mBinding.tvTime.text = SpanUtils().append("我们已经在一起")
+                        .append("$days")
+                        .setForegroundColor(R.color.c_FF4500.getColor())
+                        .append("天了")
+                        .create()
+                }
         }
     }
 

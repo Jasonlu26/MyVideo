@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
-import com.yx.play.databinding.ActivitySplashBinding
+import com.sccdwxxyljx.com.databinding.ActivitySplashBinding
 import com.yx.play.ext.bindView
 
 /**

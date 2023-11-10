@@ -1,7 +1,7 @@
 package com.yx.play.util
 
 import com.blankj.utilcode.util.PathUtils
-import com.yx.play.BuildConfig
+import com.sccdwxxyljx.com.BuildConfig
 import java.io.File
 
 /**

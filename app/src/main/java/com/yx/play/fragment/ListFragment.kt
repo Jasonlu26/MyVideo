@@ -11,10 +11,10 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.chad.library.adapter.base.BaseBinderAdapter
 import com.chad.library.adapter.base.binder.QuickViewBindingItemBinder
-import com.yx.play.R
+import com.sccdwxxyljx.com.R
+import com.sccdwxxyljx.com.databinding.FragmentListBinding
+import com.sccdwxxyljx.com.databinding.ItemQingdanBinding
 import com.yx.play.activity.QingDanDetalisActivity
-import com.yx.play.databinding.FragmentListBinding
-import com.yx.play.databinding.ItemQingdanBinding
 import com.yx.play.db.DataBaseManager
 import com.yx.play.db.model.QingDanModel
 import com.yx.play.ext.addHorizontalItemDecoration

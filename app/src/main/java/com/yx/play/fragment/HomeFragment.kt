@@ -13,9 +13,9 @@ import com.blankj.utilcode.util.SPUtils
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.youth.banner.adapter.BannerAdapter
-import com.yx.play.R
+import com.sccdwxxyljx.com.R
 import com.yx.play.activity.DetalisActivity
-import com.yx.play.databinding.FragmentMainBinding
+import com.sccdwxxyljx.com.databinding.FragmentMainBinding
 import com.yx.play.db.DataBaseManager
 import com.yx.play.db.model.KaPianModel
 import com.yx.play.dialog.HomePopupWindow

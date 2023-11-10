@@ -7,9 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.BaseBinderAdapter
 import com.chad.library.adapter.base.binder.QuickViewBindingItemBinder
-import com.yx.play.R
-import com.yx.play.databinding.DialogHomeContentBinding
-import com.yx.play.databinding.ItemHomePopBinding
+import com.sccdwxxyljx.com.R
+import com.sccdwxxyljx.com.databinding.DialogHomeContentBinding
+import com.sccdwxxyljx.com.databinding.ItemHomePopBinding
 import com.yx.play.ext.addVerticalItemDecoration
 import com.yx.play.ext.dpToPx
 import com.yx.play.ext.getColor

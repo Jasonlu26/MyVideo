@@ -12,7 +12,7 @@ import com.luck.picture.lib.basic.PictureSelector
 import com.luck.picture.lib.config.SelectMimeType
 import com.luck.picture.lib.entity.LocalMedia
 import com.luck.picture.lib.interfaces.OnResultCallbackListener
-import com.yx.play.databinding.ActivityDetalisBinding
+import com.sccdwxxyljx.com.databinding.ActivityDetalisBinding
 import com.yx.play.db.DataBaseManager
 import com.yx.play.db.result.KaPianResult
 import com.yx.play.ext.*
