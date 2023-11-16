@@ -3,7 +3,6 @@ package com.yx.play.db
 import android.content.Context
 import androidx.room.Room
 import com.sccdwxxyljx.com.BuildConfig
-import com.yx.play.BuildConfig
 
 
 /**

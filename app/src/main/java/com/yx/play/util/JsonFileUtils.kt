@@ -1,6 +1,7 @@
 package com.yx.play.util
 
 import android.content.Context
+import androidx.annotation.Keep
 import com.alibaba.fastjson.JSON
 import com.blankj.utilcode.util.GsonUtils
 import com.blankj.utilcode.util.SPUtils
@@ -145,6 +146,7 @@ object JsonFileUtils {
         }
     }
 
+    @Keep
     data class Content(
         val type: String,
         val content: String,
@@ -154,6 +156,7 @@ object JsonFileUtils {
         val address: String
     )
 
+    @Keep
     data class Category(
         val content: List<Content>,
         val geyan: String
@@ -200,11 +203,13 @@ object JsonFileUtils {
         }
     }
 
+    @Keep
     data class QingDan(
         val des: MutableList<QingDanData> = mutableListOf(),
         val name: String = ""
     )
 
+    @Keep
     data class QingDanData(
         val img: String = "",
         val title: String = "",

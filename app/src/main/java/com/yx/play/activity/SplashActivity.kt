@@ -4,7 +4,9 @@ import android.os.Bundle
 import android.view.Window
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatActivity
+import com.blankj.utilcode.util.SPUtils
 import com.sccdwxxyljx.com.databinding.ActivitySplashBinding
+import com.yx.play.dialog.MyPrivacyDialog
 import com.yx.play.ext.bindView
 
 /**
@@ -34,7 +36,34 @@ class SplashActivity : AppCompatActivity() {
     }
 
     private fun loadAd() {
-        gotoMain()
+        val isAgree = SPUtils.getInstance().getBoolean("isAgree")
+        if (isAgree) {
+            gotoMain()
+            return
+        }
+
+        val dialog = MyPrivacyDialog(this)
+        dialog.show()
+
+        dialog.setOnBtnClickListener { type ->
+            when (type) {
+                MyPrivacyDialog.ARGEEMENT_TEXT_CLICK -> {
+                    XieyiActivity.newInstance(this)
+                }
+                MyPrivacyDialog.SECRET_TEXT_CLICK -> {
+                    XieyiActivity.newInstance(this)
+                }
+                MyPrivacyDialog.NOT_ARGEE_BTN_CLICK -> {
+                    dialog.dismiss()
+                    finish()
+                }
+                MyPrivacyDialog.ARGEE_BTN_CLICK -> {
+                    dialog.dismiss()
+                    SPUtils.getInstance().put("isAgree", true)
+                    gotoMain()
+                }
+            }
+        }
 //        val rhSplashAd = RHSplashAd()
 //        rhSplashAd.loadAd(
 //            this,

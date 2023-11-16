@@ -13,7 +13,7 @@ android {
         multiDexEnabled true
         minSdk 26
         targetSdk 33
-        versionCode 1
+        versionCode 4
         versionName "1.0.0"
 
 //        ndkVersion "21.3.6528147"
