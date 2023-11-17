@@ -5,12 +5,20 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentManager
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
+import androidx.viewbinding.ViewBinding
+import androidx.viewpager2.adapter.FragmentStateAdapter
+import androidx.viewpager2.widget.ViewPager2
+import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
+import com.flyco.tablayout.listener.CustomTabEntity
+import com.flyco.tablayout.listener.OnTabSelectListener
 import com.yx.play.R
 import com.yx.play.activity.HistoryActivity
 import com.yx.play.activity.MainActivity
@@ -40,6 +48,9 @@ class HomeFragment : Fragment() {
 
     private val gridManager = GridLayoutManager(context, 3)
 
+    private var fragments = mapOf<Int, Fragment>()
+    private var tabs = arrayListOf<CustomTabEntity>()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -54,32 +65,32 @@ class HomeFragment : Fragment() {
 
     private fun initView() {
         //        mAdapter.addItemBinder(ItemVideoRecommendBinder())
-        mBinding.listView.adapter = mAdapter
-
-//        val decoration = VerticalSectionDecoration.create(this)
-//            .sectionTextSize(R.dimen.sp_16.getDimension().toFloat())
-//            .sectionTextColor(R.color.text_0D1324.getColor())
-//            .sectionTextLeftOffset(R.dimen.dp_16.getDimension().toFloat())
-//            .sectionSize(R.dimen.dp_30.getDimension())
-//            .size(R.dimen.dp_0_5.getDimension())
-//            .sectionDrawable(R.drawable.decoration_contact_section_bg)
-////            .drawable(R.drawable.decoration_contact_list_bg)
-//            .showLast(false)
-//            .sectionProvider(object : VerticalSectionDecoration.SectionProvider {
-//                override fun sectionName(position: Int, parent: RecyclerView?): String? {
-//                    return getHeaderName(position)
-//                }
+//        mBinding.listView.adapter = mAdapter
 //
-//            })
-//            .build()
-//        mBinding.listView.addItemDecoration(decoration)
-        mBinding.listView.addHorizontalItemDecoration(
-            color = R.color.transparent.getColor(),
-            size = 10f.dpToPx(),
-            isShowLastDivider = true
-        )
-
-        mBinding.listView.layoutManager = gridManager
+////        val decoration = VerticalSectionDecoration.create(this)
+////            .sectionTextSize(R.dimen.sp_16.getDimension().toFloat())
+////            .sectionTextColor(R.color.text_0D1324.getColor())
+////            .sectionTextLeftOffset(R.dimen.dp_16.getDimension().toFloat())
+////            .sectionSize(R.dimen.dp_30.getDimension())
+////            .size(R.dimen.dp_0_5.getDimension())
+////            .sectionDrawable(R.drawable.decoration_contact_section_bg)
+//////            .drawable(R.drawable.decoration_contact_list_bg)
+////            .showLast(false)
+////            .sectionProvider(object : VerticalSectionDecoration.SectionProvider {
+////                override fun sectionName(position: Int, parent: RecyclerView?): String? {
+////                    return getHeaderName(position)
+////                }
+////
+////            })
+////            .build()
+////        mBinding.listView.addItemDecoration(decoration)
+//        mBinding.listView.addHorizontalItemDecoration(
+//            color = R.color.transparent.getColor(),
+//            size = 10f.dpToPx(),
+//            isShowLastDivider = true
+//        )
+//
+//        mBinding.listView.layoutManager = gridManager
 
 
 
@@ -104,47 +115,73 @@ class HomeFragment : Fragment() {
     }
 
     private fun fetchData() {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val result = Recommend.execute()
-            if (result is ResponseResult.Success) {
-                val data = result.value?.toMutableList()
-                val dataMap = data?.groupBy { it.type_id_1 }
-                val list = mutableListOf<MultiItemEntity>()
-                list.add(HomeFragment.HearEntity("电影"))
-                list.addAll(
-                    dataMap?.get(1)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
+        fragments = getFragments()
 
-                list.add(HomeFragment.HearEntity("电视剧"))
-                list.addAll(
-                    dataMap?.get(2)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
+        tabs = getTabs() as ArrayList<CustomTabEntity>
 
-                list.add(HomeFragment.HearEntity("综艺"))
-                list.addAll(
-                    dataMap?.get(3)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
+        mBinding.vpBanner.adapter = FragmentResourceVpAdapter(childFragmentManager, lifecycle)
+        mBinding.vpBanner.offscreenPageLimit = 3
 
-                list.add(HomeFragment.HearEntity("动漫"))
-                list.addAll(
-                    dataMap?.get(4)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
 
-                list.add(HomeFragment.HearEntity("记录片"))
-                list.addAll(
-                    dataMap?.get(24)
-                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
-                        ?: mutableListOf())
-                withContext(Dispatchers.Main) {
-                    gridManager.spanSizeLookup = SpecialSpanSizeLookup(list)
-                    mAdapter.setList(list)
-                }
+        mBinding.tabResource.setTabData(tabs)
+
+
+        mBinding.tabResource.setOnTabSelectListener(object : OnTabSelectListener {
+            override fun onTabSelect(position: Int) {
+                mBinding.vpBanner.currentItem = position
             }
-        }
+
+            override fun onTabReselect(position: Int) {
+            }
+        })
+
+        mBinding.vpBanner.registerOnPageChangeCallback(object :
+            ViewPager2.OnPageChangeCallback() {
+            override fun onPageSelected(position: Int) {
+                mBinding.tabResource.currentTab = position
+            }
+        })
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            val result = Recommend.execute()
+//            if (result is ResponseResult.Success) {
+//                val data = result.value?.toMutableList()
+//                val dataMap = data?.groupBy { it.type_id_1 }
+//                val list = mutableListOf<MultiItemEntity>()
+//                list.add(HomeFragment.HearEntity("电影"))
+//                list.addAll(
+//                    dataMap?.get(1)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//
+//                list.add(HomeFragment.HearEntity("电视剧"))
+//                list.addAll(
+//                    dataMap?.get(2)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//
+//                list.add(HomeFragment.HearEntity("综艺"))
+//                list.addAll(
+//                    dataMap?.get(3)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//
+//                list.add(HomeFragment.HearEntity("动漫"))
+//                list.addAll(
+//                    dataMap?.get(4)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//
+//                list.add(HomeFragment.HearEntity("记录片"))
+//                list.addAll(
+//                    dataMap?.get(24)
+//                        ?.sortedByDescending { BigDecimal(it.vod_douban_score).toFloat() }
+//                        ?: mutableListOf())
+//                withContext(Dispatchers.Main) {
+//                    gridManager.spanSizeLookup = SpecialSpanSizeLookup(list)
+//                    mAdapter.setList(list)
+//                }
+//            }
+//        }
     }
 
     fun getHeaderName(pos: Int): String? {
@@ -198,6 +235,22 @@ class HomeFragment : Fragment() {
         }
     }
 
+
+    private fun getTabs() = arrayListOf(
+        TabLayoutEntry("电影"),
+        TabLayoutEntry("电视剧"),
+        TabLayoutEntry("综艺"),
+        TabLayoutEntry("动漫"),
+        TabLayoutEntry("纪录片"),
+    )
+
+    private fun getFragments() = mapOf(
+        0 to MovieFragment(),
+        1 to MovieFragment(),
+        2 to MovieFragment(),
+        3 to MovieFragment(),
+        4 to MovieFragment(),
+    )
 
     //    inner class ItemVideoRecommendBinder :
 //        QuickViewBindingItemBinder<RecommendItemResponse, ItemVideoRecommendBinding>() {
@@ -279,4 +332,33 @@ class HomeFragment : Fragment() {
             return 1
         }
     }
+
+
+    inner class FragmentResourceVpAdapter(
+        val manager: FragmentManager,
+        val lifecycle: Lifecycle
+    ) : FragmentStateAdapter(manager, lifecycle) {
+
+        override fun getItemCount() = fragments.size
+
+        override fun createFragment(position: Int): Fragment =
+            fragments[position] ?: error("")
+    }
+
+    inner class TabLayoutEntry(val title: String, private val selectedIcon: Int = 0, private val unSelectedIcon: Int = 0) :
+        CustomTabEntity {
+
+        override fun getTabUnselectedIcon(): Int {
+            return unSelectedIcon
+        }
+
+        override fun getTabSelectedIcon(): Int {
+            return selectedIcon
+        }
+
+        override fun getTabTitle(): String {
+            return title
+        }
+    }
+
 }
