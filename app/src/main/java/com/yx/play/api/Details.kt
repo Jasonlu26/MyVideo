@@ -131,7 +131,7 @@ data class DetailsItemPlayResponse(
 object Details {
     fun execute(id: String): ResponseResult<DetailsItemResponse?> {
         val okHttpClient = NetManager.getInstance().getOkhttpClient()
-        val url = "http://vod.wxspb.cn/api/movies/get_detail?id=${id}"
+        val url = "http://vod.wxxykj.cn/api/movies/get_detail?id=${id}"
         try {
             val req =
                 Request.Builder().url(url)

@@ -66,7 +66,7 @@ object Search {
     fun execute(keyword: String, page: Int): ResponseResult<MutableList<SearchItemResponse>?> {
         val okHttpClient = NetManager.getInstance().getOkhttpClient()
         val url =
-            "http://vod.wxspb.cn/api/movies/search_movies?" + "keywords=${keyword}&page=${page}"
+            "http://vod.wxxykj.cn/api/movies/search_movies?" + "keywords=${keyword}&page=${page}"
         try {
             val req =
                 Request.Builder().url(url)

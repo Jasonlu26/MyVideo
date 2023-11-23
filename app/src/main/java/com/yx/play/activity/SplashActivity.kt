@@ -8,7 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.adspace.sdk.adlistener.SplashAdListener
 import com.rh.sdk.api.RHSplashAd
-import com.yx.play.databinding.ActivitySplashBinding
+import com.sccdwxxyljx.com.databinding.ActivitySplashBinding
 import com.yx.play.ext.bindView
 import com.yx.play.util.TestPosId
 

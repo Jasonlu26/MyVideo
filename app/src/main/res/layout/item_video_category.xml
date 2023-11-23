@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.appcompat.widget.AppCompatTextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="@dimen/dp_30"
+    android:textColor="@color/c_0D1324"
+    android:textSize="@dimen/sp_14"
+    android:gravity="center"
+    android:paddingHorizontal="@dimen/dp_8"
+    android:id="@+id/tvVideoNumName"
+    android:layout_marginHorizontal="@dimen/dp_6"
+    tools:background="@drawable/bg_video_category"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:text="720p"
+    >
+
+</androidx.appcompat.widget.AppCompatTextView>

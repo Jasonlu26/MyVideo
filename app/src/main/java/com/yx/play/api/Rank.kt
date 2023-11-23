@@ -66,7 +66,7 @@ object Rank {
     fun execute(page: Int): ResponseResult<MutableList<RankItemResponse>?> {
         val okHttpClient = NetManager.getInstance().getOkhttpClient()
         val url =
-            "http://vod.wxspb.cn/api/movies/get_rank?" + "page=${page}"
+            "http://vod.wxxykj.cn/api/movies/get_rank?" + "page=${page}"
         try {
             val req =
                 Request.Builder().url(url)

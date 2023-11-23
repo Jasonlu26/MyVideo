@@ -75,7 +75,7 @@ data class RecommendItemResponse(
 object Recommend {
     fun execute(): ResponseResult<MutableList<RecommendItemResponse>?> {
         val okHttpClient = NetManager.getInstance().getOkhttpClient()
-        val url = "http://vod.wxspb.cn/api/movies/recommend"
+        val url = "http://vod.wxxykj.cn/api/movies/recommend"
         try {
             val req =
                 Request.Builder().url(url)

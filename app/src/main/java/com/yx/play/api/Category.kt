@@ -2,6 +2,7 @@ package com.yx.play.api
 
 import androidx.annotation.Keep
 import com.blankj.utilcode.util.GsonUtils
+import com.google.gson.annotations.SerializedName
 import com.yx.play.ext.responseToEntity
 import com.yx.play.net.*
 import okhttp3.Request
@@ -81,24 +82,30 @@ import okhttp3.Request
 data class CategoryResponse(
     val id: Int = 0,
     val name: String = "",
-    val order: MutableList<String> = mutableListOf(),
-    val type: MutableList<CategoryType> = mutableListOf(),
-    val vod_area: MutableList<String> = mutableListOf(),
-    val vod_lang: MutableList<String> = mutableListOf(),
-    val vod_year: MutableList<String> = mutableListOf()
+    @SerializedName("order")
+    val orders: MutableList<String> = mutableListOf(),
+    @SerializedName("type")
+    val types: MutableList<CategoryType> = mutableListOf(),
+    @SerializedName("vod_area")
+    val vodAreas: MutableList<String> = mutableListOf(),
+    @SerializedName("vod_lang")
+    val vodLangs: MutableList<String> = mutableListOf(),
+    @SerializedName("vod_year")
+    val vodYears: MutableList<String> = mutableListOf()
 )
 
 @Keep
 data class CategoryType(
-    val id: Int = 0,
-    val name: String = ""
+    var id: Int = 0,
+    var name: String = "",
+    var isSelect: Boolean = false
 )
 
 object Category {
     fun execute(): ResponseResult<MutableList<CategoryResponse>?> {
         val okHttpClient = NetManager.getInstance().getOkhttpClient()
         val url =
-            "http://vod.wxspb.cn/api/movies/get_type"
+            "http://vod.wxxykj.cn/api/movies/get_type"
         try {
             val req =
                 Request.Builder().url(url)

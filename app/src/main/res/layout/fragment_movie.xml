@@ -5,68 +5,113 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     >
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv1"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_movie_type"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:orientation="horizontal"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv2"
+    <com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
-        app:layout_constraintTop_toBottomOf="@id/rv1"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_movie_type"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:orientation="horizontal"/>
+        android:layout_height="match_parent"
+        >
+        <com.yx.play.view.NestedScrollableHost
+            android:id="@+id/host1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv1"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:clipToPadding="false"
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv3"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
-        app:layout_constraintTop_toBottomOf="@id/rv2"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_movie_type"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:orientation="horizontal"/>
+                tools:listitem="@layout/item_movie_type"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:orientation="horizontal"/>
+        </com.yx.play.view.NestedScrollableHost>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv4"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
-        app:layout_constraintTop_toBottomOf="@id/rv3"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_movie_type"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:orientation="horizontal"/>
+        <com.yx.play.view.NestedScrollableHost
+            android:id="@+id/host2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/host1"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv2"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:clipToPadding="false"
+
+                tools:listitem="@layout/item_movie_type"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:orientation="horizontal"/>
+        </com.yx.play.view.NestedScrollableHost>
+        <com.yx.play.view.NestedScrollableHost
+            android:id="@+id/host3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/host2"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv3"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_movie_type"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:orientation="horizontal"/>
+        </com.yx.play.view.NestedScrollableHost>
+
+        <com.yx.play.view.NestedScrollableHost
+            android:id="@+id/host4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/host3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv4"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_movie_type"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:orientation="horizontal"/>
+        </com.yx.play.view.NestedScrollableHost>
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv5"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_30"
-        app:layout_constraintTop_toBottomOf="@id/rv4"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        tools:listitem="@layout/item_movie_type"
-        tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:orientation="horizontal"/>
+        <com.yx.play.view.NestedScrollableHost
+            android:id="@+id/host5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/host4"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvContent"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/rv5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv5"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/dp_40"
+                android:paddingHorizontal="@dimen/dp_10"
+                android:clipToPadding="false"
+                tools:listitem="@layout/item_movie_type"
+                tools:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:orientation="horizontal"/>
+        </com.yx.play.view.NestedScrollableHost>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@id/host5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:paddingStart="@dimen/dp_10"/>
+    </com.donkingliang.consecutivescroller.ConsecutiveScrollerLayout>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

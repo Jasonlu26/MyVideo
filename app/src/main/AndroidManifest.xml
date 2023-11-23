@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="com.yx.play">
+    package="com.sccdwxxyljx.com">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -23,7 +23,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_UPDATES" />
 
     <application
-        android:name=".AppApplication"
+        android:name="com.yx.play.AppApplication"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -37,7 +37,7 @@
         android:usesCleartextTraffic="true"
         tools:replace="android:allowBackup">
         <activity
-            android:name=".activity.SplashActivity"
+            android:name="com.yx.play.activity.SplashActivity"
             android:exported="true"
             android:screenOrientation="portrait">
             <intent-filter>
@@ -52,21 +52,21 @@
         </activity>
 
         <activity
-            android:name=".activity.MainActivity"
+            android:name="com.yx.play.activity.MainActivity"
             android:launchMode="singleTask"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 
         <activity
-            android:name=".activity.DetalisActivity"
+            android:name="com.yx.play.activity.DetalisActivity"
             android:configChanges="orientation|screenSize|keyboardHidden"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.SearchActivity"
+            android:name="com.yx.play.activity.SearchActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".activity.HistoryActivity"
+            android:name="com.yx.play.activity.HistoryActivity"
             android:configChanges="orientation"
             android:screenOrientation="portrait" />
 

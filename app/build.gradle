@@ -5,11 +5,11 @@ plugins {
 }
 
 android {
-    namespace 'com.yx.play'
+    namespace 'com.sccdwxxyljx.com'
     compileSdk 33
 
     defaultConfig {
-        applicationId "com.yx.play"
+        applicationId "com.sccdwxxyljx.com"
         multiDexEnabled true
         minSdk 26
         targetSdk 33
@@ -213,5 +213,6 @@ dependencies {
 
     //tabLayout  https://github.com/H07000223/FlycoTabLayout
     implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.1.2@aar'
+    implementation "com.github.donkingliang:ConsecutiveScroller:4.6.3"
 
 }

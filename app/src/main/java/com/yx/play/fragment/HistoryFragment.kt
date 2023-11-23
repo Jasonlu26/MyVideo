@@ -9,11 +9,10 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.binder.QuickViewBindingItemBinder
-import com.yx.play.R
+import com.sccdwxxyljx.com.R
+import com.sccdwxxyljx.com.databinding.FragmentHistoryBinding
+import com.sccdwxxyljx.com.databinding.ItemVideoHistoryBinding
 import com.yx.play.activity.SearchActivity
-import com.yx.play.databinding.FragmentHistoryBinding
-import com.yx.play.databinding.FragmentHomeBinding
-import com.yx.play.databinding.ItemVideoHistoryBinding
 import com.yx.play.db.DataBaseManager
 import com.yx.play.db.model.YXHistoryRecordModel
 import com.yx.play.ext.addVerticalItemDecoration

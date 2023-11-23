@@ -9,25 +9,24 @@ import androidx.fragment.app.FragmentManager
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
-import androidx.viewbinding.ViewBinding
 import androidx.viewpager2.adapter.FragmentStateAdapter
 import androidx.viewpager2.widget.ViewPager2
-import com.blankj.utilcode.util.StringUtils
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.BaseMultiItemQuickAdapter
 import com.chad.library.adapter.base.entity.MultiItemEntity
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.flyco.tablayout.listener.CustomTabEntity
 import com.flyco.tablayout.listener.OnTabSelectListener
-import com.yx.play.R
+import com.sccdwxxyljx.com.R
+import com.sccdwxxyljx.com.databinding.FragmentHomeBinding
 import com.yx.play.activity.HistoryActivity
-import com.yx.play.activity.MainActivity
 import com.yx.play.activity.SearchActivity
-import com.yx.play.api.Recommend
+import com.yx.play.api.Category
 import com.yx.play.api.RecommendItemResponse
-import com.yx.play.databinding.FragmentHomeBinding
 import com.yx.play.db.DataBaseManager
-import com.yx.play.ext.*
+import com.yx.play.ext.click
+import com.yx.play.ext.gone
+import com.yx.play.ext.visible
 import com.yx.play.net.ResponseResult
 import com.yx.play.util.DateUtil
 import com.yx.play.util.IntentUtils
@@ -48,7 +47,7 @@ class HomeFragment : Fragment() {
 
     private val gridManager = GridLayoutManager(context, 3)
 
-    private var fragments = mapOf<Int, Fragment>()
+    private var fragments = mapOf<Int, BaseMovieFragment>()
     private var tabs = arrayListOf<CustomTabEntity>()
 
     override fun onCreateView(
@@ -120,7 +119,7 @@ class HomeFragment : Fragment() {
         tabs = getTabs() as ArrayList<CustomTabEntity>
 
         mBinding.vpBanner.adapter = FragmentResourceVpAdapter(childFragmentManager, lifecycle)
-        mBinding.vpBanner.offscreenPageLimit = 3
+        mBinding.vpBanner.offscreenPageLimit = 5
 
 
         mBinding.tabResource.setTabData(tabs)
@@ -141,6 +140,20 @@ class HomeFragment : Fragment() {
                 mBinding.tabResource.currentTab = position
             }
         })
+
+        lifecycleScope.launch(Dispatchers.IO) {
+            val result = Category.execute()
+
+            if (result !is ResponseResult.Success) return@launch
+
+            val data = result.value
+            if (data.isNullOrEmpty()) return@launch
+            withContext(Dispatchers.Main){
+                data.forEachIndexed { index, categoryResponse ->
+                    fragments[index]?.setData(categoryResponse)
+                }
+            }
+        }
 //        lifecycleScope.launch(Dispatchers.IO) {
 //            val result = Recommend.execute()
 //            if (result is ResponseResult.Success) {
@@ -245,11 +258,11 @@ class HomeFragment : Fragment() {
     )
 
     private fun getFragments() = mapOf(
-        0 to MovieFragment(),
-        1 to MovieFragment(),
-        2 to MovieFragment(),
-        3 to MovieFragment(),
-        4 to MovieFragment(),
+        0 to MovieFragment(1),
+        1 to MovieFragment(2),
+        2 to MovieFragment(3),
+        3 to MovieFragment(4),
+        4 to MovieFragment(24),
     )
 
     //    inner class ItemVideoRecommendBinder :

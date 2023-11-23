@@ -51,14 +51,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/layoutTop"
         app:tl_iconVisible="false"
-        app:tl_indicator_color="@color/c_theme"
+        app:tl_indicator_color="@color/transparent"
         app:tl_indicator_corner_radius="@dimen/dp_2_5"
         app:tl_indicator_height="@dimen/dp_5"
         app:tl_indicator_width="@dimen/dp_8"
         app:tl_tab_space_equal="true"
         app:tl_textBold="SELECT"
-        app:tl_textSelectColor="@color/c_theme"
-        app:tl_textUnselectColor="@color/c_8F9BAF"
+        app:tl_textSelectColor="@color/white"
+        app:tl_textUnselectColor="@color/c_0D1324"
         app:tl_textsize="@dimen/sp_16"
         />
 
@@ -68,7 +68,7 @@
         android:layout_height="@dimen/dp_0"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/layoutTop"
+        app:layout_constraintTop_toBottomOf="@id/tabResource"
         />
 
 
@@ -86,7 +86,7 @@
         android:id="@+id/layoutHistory"
         android:layout_width="wrap_content"
         android:layout_height="@dimen/dp_36"
-        android:layout_marginBottom="@dimen/dp_100"
+        android:layout_marginBottom="@dimen/dp_50"
         android:background="@drawable/bg_main_history"
         android:gravity="center_vertical"
         android:orientation="horizontal"

@@ -9,13 +9,12 @@ import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.chad.library.adapter.base.binder.QuickViewBindingItemBinder
-import com.yx.play.R
+import com.sccdwxxyljx.com.R
+import com.sccdwxxyljx.com.databinding.FragmentRankBinding
+import com.sccdwxxyljx.com.databinding.ItemRankVideoBinding
 import com.yx.play.activity.SearchActivity
 import com.yx.play.api.Rank
 import com.yx.play.api.RankItemResponse
-import com.yx.play.databinding.FragmentRankBinding
-import com.yx.play.databinding.ItemRankVideoBinding
-import com.yx.play.db.model.YXHistoryRecordModel
 import com.yx.play.ext.addVerticalItemDecoration
 import com.yx.play.ext.dpToPx
 import com.yx.play.ext.getColor

@@ -10,28 +10,16 @@ import android.view.KeyEvent
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
-import androidx.databinding.adapters.ImageViewBindingAdapter.setImageDrawable
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.viewpager.widget.ViewPager.OnPageChangeListener
 import androidx.viewpager2.adapter.FragmentStateAdapter
-
-import com.yx.play.R
-import com.yx.play.databinding.ActivityMainBinding
-import com.yx.play.db.DataBaseManager
+import com.sccdwxxyljx.com.R
+import com.sccdwxxyljx.com.databinding.ActivityMainBinding
 import com.yx.play.ext.bindView
 import com.yx.play.ext.click
-import com.yx.play.ext.gone
-import com.yx.play.ext.visible
 import com.yx.play.fragment.HistoryFragment
 import com.yx.play.fragment.HomeFragment
 import com.yx.play.fragment.RankFragment
-import com.yx.play.util.DateUtil
-import com.yx.play.util.IntentUtils
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 
 
 class MainActivity : AppCompatActivity() {
