@@ -10,7 +10,7 @@
         android:id="@+id/layoutTop"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_28"
-        android:layout_marginTop="@dimen/dp_30"
+        android:layout_marginTop="@dimen/dp_40"
         android:gravity="center_vertical"
         android:orientation="horizontal"
         app:layout_constraintStart_toStartOf="parent"
