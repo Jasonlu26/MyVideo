@@ -46,7 +46,7 @@ class MovieFragment(val parentId: Int) : BaseMovieFragment() {
 
     private var mPage = 1
 
-    private var selectOrder: String = "最新"
+    private var selectOrder: String = "最热"
     private var selectTypeId: Int? = null
     private var selectArea: String? = ""
     private var selectLang: String? = ""

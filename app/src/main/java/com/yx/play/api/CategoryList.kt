@@ -34,7 +34,7 @@ object CategoryList {
     fun execute(
         parentTypeId: Int,
         typeId: Int? = 0,
-        order: String = "最新",
+        order: String = "最热",
         vodArea: String? = "",
         vodLang: String? = "",
         vodYear: String? = "",
@@ -42,24 +42,24 @@ object CategoryList {
     ): ResponseResult<MutableList<CategoryListItemResponse>?> {
         val okHttpClient = NetManager.getInstance().getOkhttpClient()
 
-        val params = "type_id_1=$parentTypeId&order=$order"
+        var params = "type_id_1=$parentTypeId&order=$order"
 
         if (typeId!= null){
-            params.plus("&type_id=$typeId")
+            params = params.plus("&type_id=$typeId")
         }
         if (!vodArea.isNullOrEmpty()){
-            params.plus("&vod_area=$vodArea")
+            params = params.plus("&vod_area=$vodArea")
         }
 
         if (!vodLang.isNullOrEmpty()){
-            params.plus("&vod_lang=$vodLang")
+            params = params.plus("&vod_lang=$vodLang")
         }
 
         if (!vodYear.isNullOrEmpty()){
-            params.plus("&vod_year=$vodYear")
+            params = params.plus("&vod_year=$vodYear")
         }
 
-        params.plus("&page=$page")
+        params = params.plus("&page=$page")
 
         val url =
             "http://vod.wxxykj.cn/api/movies/get_list?${params}"
