@@ -25,26 +25,28 @@ object IntentUtils {
         context: Activity,
         id: String,
     ) {
-        val isOpenReward = DataBaseManager.getInstance().getIsOpenReward()
-        if (isOpenReward){
-            DetalisActivity.newInstance(context, id)
-            return
-        }
-        DialogCommon.create(context)
-            .setCancelClickListener {
 
-            }
-            .setConfirmClickListener {
-                showLoading(context)
-                AdUtils.showRewardAd(context, id) {
-                    hideLoading()
-                }
-            }
-            .show(
-                "看完视频可以获取所有视频观看权限！",
-                confirmBtnText = "确定",
-                cancelBtnText = "取消"
-            )
+        DetalisActivity.newInstance(context, id)
+//        val isOpenReward = DataBaseManager.getInstance().getIsOpenReward()
+//        if (isOpenReward){
+//            DetalisActivity.newInstance(context, id)
+//            return
+//        }
+//        DialogCommon.create(context)
+//            .setCancelClickListener {
+//
+//            }
+//            .setConfirmClickListener {
+//                showLoading(context)
+//                AdUtils.showRewardAd(context, id) {
+//                    hideLoading()
+//                }
+//            }
+//            .show(
+//                "看完视频可以获取所有视频观看权限！",
+//                confirmBtnText = "确定",
+//                cancelBtnText = "取消"
+//            )
 
     }
 

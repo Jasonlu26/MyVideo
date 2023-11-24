@@ -1,10 +1,10 @@
 package com.yx.play.util;
 
 public enum TestPosId {
-    APP_ID("1019924923360"), // appId
-    APP_KEY("e71ab76c990bdb3a"), // appKey
-    POSID_SPLASH("a0ihndcbpu64"), // 开屏PosId
-    POSID_INTERSTITIAL("a0ihv3h7c75a"), // 插屏PosId
+    APP_ID("1172943670384"), // appId
+    APP_KEY("9690a8558345e3b7"), // appKey
+    POSID_SPLASH("afkr6wrpbc08"), // 开屏PosId
+    POSID_INTERSTITIAL("afkr8e1jhe72"), // 插屏PosId
     POSID_REWARD("a0ihx57cf7ug"),// 激励视频PosId
     POSID_FEED("a0ii114xb7kk"),// 信息流PosId
     POSID_CONTENT("a0ii32i4v7m0"),// 视频流PosId

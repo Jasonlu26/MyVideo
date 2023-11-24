@@ -13,6 +13,7 @@ import cn.jzvd.Jzvd
 import com.adspace.sdk.adlistener.InterstitialAdListener
 import com.chad.library.adapter.base.BaseBinderAdapter
 import com.chad.library.adapter.base.binder.QuickViewBindingItemBinder
+import com.kwad.sdk.core.b.a.it
 import com.rh.sdk.api.RHInterstitialAd
 import com.sccdwxxyljx.com.R
 import com.sccdwxxyljx.com.databinding.ActivityDetalisBinding
@@ -91,14 +92,25 @@ class DetalisActivity : AppCompatActivity() {
             }
 
             startPlay(playUrl = item.url, playName = item.name)
+            mAdapter.data.forEach { vo ->
+                if (vo is DetailsItemPlayResponse) {
+                    vo.isSelect = false
+
+                    if (vo.name == item.name) {
+                        vo.isSelect = true
+                    }
+                }
+            }
+
+            mAdapter.notifyDataSetChanged()
 
         }
     }
 
-    private fun startAd(){
+    private fun startAd() {
         val rhInterstitialAd = RHInterstitialAd()
         rhInterstitialAd.loadAd(this, TestPosId.POSID_INTERSTITIAL.value, object :
-            InterstitialAdListener{
+            InterstitialAdListener {
             override fun onADCached() {
 
             }
@@ -146,11 +158,17 @@ class DetalisActivity : AppCompatActivity() {
                             playName = history.playName ?: "",
                             seekDuration = history.playDuration
                         )
+                        data?.vod_play_url?.forEach { item ->
+                            if (item.name == history.playName) {
+                                item.isSelect = true
+                            }
+                        }
                     } else {
                         startPlay(
                             playUrl = data?.vod_play_url?.get(0)?.url ?: "",
                             playName = data?.vod_play_url?.get(0)?.name ?: "",
                         )
+                        data?.vod_play_url?.get(0)?.isSelect = true
                     }
 
                     mBinding.tvVideoTips.text = "导演：${data?.vod_director}\n" +
@@ -173,7 +191,7 @@ class DetalisActivity : AppCompatActivity() {
             playUrl,
             playName
         )
-        if (seekDuration != 0L){
+        if (seekDuration != 0L) {
 //            mBinding.jzVideo.progressBar.set
             mBinding.jzVideo.seekToInAdvance = seekDuration
         }
@@ -221,6 +239,13 @@ class DetalisActivity : AppCompatActivity() {
             data: DetailsItemPlayResponse
         ) {
             holder.viewBinding.tvVideoNumName.text = data.name
+            if (data.isSelect) {
+                holder.viewBinding.tvVideoNumName.setBackgroundResource(R.drawable.bg_video_category)
+                holder.viewBinding.tvVideoNumName.setTextColor(R.color.white.getColor())
+            } else {
+                holder.viewBinding.tvVideoNumName.setBackgroundResource(0)
+                holder.viewBinding.tvVideoNumName.setTextColor(R.color.c_0D1324.getColor())
+            }
         }
 
         override fun onCreateViewBinding(

@@ -124,7 +124,8 @@ data class DetailsItemResponse(
 @Keep
 data class DetailsItemPlayResponse(
     var name: String = "",
-    var url: String = ""
+    var url: String = "",
+    var isSelect: Boolean = false
 )
 
 

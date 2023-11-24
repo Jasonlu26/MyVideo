@@ -13,13 +13,17 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
 import androidx.viewpager2.adapter.FragmentStateAdapter
+import com.adspace.sdk.adlistener.InterstitialAdListener
+import com.rh.sdk.api.RHInterstitialAd
 import com.sccdwxxyljx.com.R
 import com.sccdwxxyljx.com.databinding.ActivityMainBinding
+import com.yx.play.db.DataBaseManager
 import com.yx.play.ext.bindView
 import com.yx.play.ext.click
 import com.yx.play.fragment.HistoryFragment
 import com.yx.play.fragment.HomeFragment
 import com.yx.play.fragment.RankFragment
+import com.yx.play.util.TestPosId
 
 
 class MainActivity : AppCompatActivity() {
@@ -74,6 +78,7 @@ class MainActivity : AppCompatActivity() {
             setCurrentItem(2)
         }
 
+        startAd()
     }
 
 //    @Keep
@@ -84,6 +89,38 @@ class MainActivity : AppCompatActivity() {
 //        mBinding.vpHome.currentItem = i
 //        setCurrentItem(i)
 //    }
+
+    private fun startAd() {
+//        val isOpenReward = DataBaseManager.getInstance().getIsOpenReward()
+//        if (isOpenReward) return
+        val rhInterstitialAd = RHInterstitialAd()
+        rhInterstitialAd.loadAd(this, TestPosId.POSID_INTERSTITIAL.value, object :
+            InterstitialAdListener {
+            override fun onADCached() {
+
+            }
+
+            override fun onADOpen() {
+
+            }
+
+            override fun onADExposure() {
+
+            }
+
+            override fun onADClick() {
+
+            }
+
+            override fun onADClose() {
+                DataBaseManager.getInstance().setIsOpenReward()
+            }
+
+            override fun onADError(p0: Int, p1: String?, p2: String?) {
+
+            }
+        })
+    }
 
     private fun setCurrentItem(i: Int) {
         mBinding.indexTab0Img.setImageDrawable(
@@ -137,6 +174,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 )
             }
+
             1 -> {
                 mBinding.indexTab1Img.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -151,6 +189,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 )
             }
+
             2 -> {
                 mBinding.indexTab2Img.setImageDrawable(
                     ContextCompat.getDrawable(
@@ -165,6 +204,7 @@ class MainActivity : AppCompatActivity() {
                     )
                 )
             }
+
             else -> {}
         }
     }
